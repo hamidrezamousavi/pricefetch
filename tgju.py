@@ -15,6 +15,8 @@ def get_data():
     except HTTPError as e:
         print(e)
         exit()
+
+
     '''
     page = urlopen('https://www.tgju.org/currency')
     currencies = dict()
