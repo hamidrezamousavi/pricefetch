@@ -1,15 +1,21 @@
 from urllib.request import urlopen
-from bs4 import BeautifulSoup
-from selenium import webdriver
-import time
+from bs4 import BeautifulSoup, Tag
+from data import Index, code_to_name
 
 
-#html = urlopen('http://pythonscraping.com/pages/javascript/ajaxDemo.html')
-#bs = BeautifulSoup(html, 'html.parser')
-#print(bs.body.div.get_text())
-driver = webdriver.Chrome('D:\\programming\\python\\begin\\')
 
-driver.get('http://pythonscraping.com/pages/javascript/ajaxDemo.html')
-time.sleep(3)
-print(driver.find_element_by_id('content').text)
-driver.close()
+page = urlopen('https://www.tgju.org/coin')
+page_bs = BeautifulSoup(page,'html.parser')
+price_table = page_bs.find('table',{'class':"data-table market-table market-section-right"})
+
+
+for table_row in price_table.tbody.children:
+    
+    if isinstance(table_row, Tag):
+        ind_code = table_row.get_attribute_list('data-market-row')[0]
+        name = code_to_name(ind_code)
+        price = table_row.td.get_text()
+        time = table_row.find_all('td')[4].get_text()
+        
+        ind = Index(name, price, time)
+        

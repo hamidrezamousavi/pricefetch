@@ -84,6 +84,7 @@ def code_to_name(code):
             'sekeb':'سکه بهار آزادی',
             'nim':'نیم سکه',
             'rob':'ربع سکه',
+            'gerami':'سکه گرمی'
 
 
 

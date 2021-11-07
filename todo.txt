@@ -1,3 +1,4 @@
 1- remove url from script to another file
 2- check git and files property to remove personal information
 3- check for exception like opening site or changes in fetch data
+    
