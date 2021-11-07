@@ -36,8 +36,7 @@ def get_data():
                                 )
                 indexes[ind_code] = ind
 
-    #get gold data
-    
+    #get coin data
     page = urlopen('https://www.tgju.org/coin')
     page_bs = BeautifulSoup(page,'html.parser')
     price_table = page_bs.find('table',{'class':"data-table market-table market-section-right"})
@@ -53,6 +52,24 @@ def get_data():
             ind = Index(name, price, time)
             indexes[ind_code] = ind
 
+    
+    page = urlopen('https://www.tgju.org/gold-chart')
+    page_bs = BeautifulSoup(page,'html.parser')
+    price_table = page_bs.find('table',{'data-tab-id':'1'})
+
+    #get coin data
+    for table_row in price_table.tbody.children:
+
+        if isinstance(table_row, Tag):
+            ind_code = table_row.get_attribute_list('data-market-row')[0]
+            name = code_to_name(ind_code)
+            price = table_row.td.get_text()
+            time = table_row.find_all('td')[4].get_text()
+
+            ind = Index(name, price, time)
+            indexes[ind_code] = ind
+    
+    
     return indexes
 
 
