@@ -3,7 +3,7 @@ from urllib.error import HTTPError, URLError
 
 from bs4 import BeautifulSoup
 
-from data import currency, code_to_name
+from data import Index, code_to_name
 
 def get_data():
     '''
@@ -19,7 +19,7 @@ def get_data():
 
     '''
     page = urlopen('https://www.tgju.org/currency')
-    currencies = dict()
+    indexes = dict()
 
     page_bs = BeautifulSoup(page,'html.parser')
 
@@ -29,14 +29,14 @@ def get_data():
     for table in price_table:
         for table_row in table.tbody.children:
             if type(table_row)== type(table):
-                cur_code = table_row.get_attribute_list('data-market-row')[0].partition('_')[2]
-                cur = currency(code_to_name(cur_code),
+                ind_code = table_row.get_attribute_list('data-market-row')[0].partition('_')[2]
+                ind = Index(code_to_name(ind_code),
                                 table_row.td.get_text(),
                                 table_row.find_all('td')[4].get_text()
                                 )
-                currencies[cur_code] = cur
+                indexes[ind_code] = ind
 
-    return currencies
+    return indexes
 data = get_data()
 
 for key, value in data.items():

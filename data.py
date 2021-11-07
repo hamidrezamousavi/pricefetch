@@ -1,6 +1,6 @@
-from collections import defaultdict
 
-class currency:
+
+class Index:
     def __init__(self,name:str, value:str, time:str) -> None:
         self._name = name
         self._value = value
