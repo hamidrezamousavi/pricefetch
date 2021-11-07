@@ -87,6 +87,9 @@ def get_data():
             indexes[ind_code] = ind
     
     
+    browser.quit()
+    
+    
     return indexes
 
 
