@@ -1,7 +1,8 @@
 from urllib.request import urlopen
 from urllib.error import HTTPError, URLError
-
 from bs4 import BeautifulSoup, Tag
+from selenium import webdriver
+from time import sleep
 
 from data import Index, code_to_name
 
@@ -19,8 +20,18 @@ def get_data():
       
     indexes = dict()
 
+    #establish a chrome browser for real time scrap
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    browser = webdriver.Chrome(options=chrome_options)
+    
+    
     #get currency data
-    page = urlopen('https://www.tgju.org/currency')
+    browser.get('https://www.tgju.org/currency')
+    sleep(2)
+    
+    page = browser.page_source
     page_bs = BeautifulSoup(page,'html.parser')
 
     price_table = page_bs.find_all('table',{'data-tab-id':"1"})
@@ -37,7 +48,10 @@ def get_data():
                 indexes[ind_code] = ind
 
     #get coin data
-    page = urlopen('https://www.tgju.org/coin')
+    browser.get('https://www.tgju.org/coin')
+    sleep(2)
+    page = browser.page_source
+    
     page_bs = BeautifulSoup(page,'html.parser')
     price_table = page_bs.find('table',{'class':"data-table market-table market-section-right"})
 
@@ -52,12 +66,15 @@ def get_data():
             ind = Index(name, price, time)
             indexes[ind_code] = ind
 
-    
-    page = urlopen('https://www.tgju.org/gold-chart')
+    #get coin data
+    browser.get('https://www.tgju.org/gold-chart')
+    sleep(2)
+    page = browser.page_source
+       
     page_bs = BeautifulSoup(page,'html.parser')
     price_table = page_bs.find('table',{'data-tab-id':'1'})
 
-    #get coin data
+    
     for table_row in price_table.tbody.children:
 
         if isinstance(table_row, Tag):
