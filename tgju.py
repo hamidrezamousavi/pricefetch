@@ -1,7 +1,7 @@
 from urllib.request import urlopen
 from urllib.error import HTTPError, URLError
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 from data import Index, code_to_name
 
@@ -15,12 +15,12 @@ def get_data():
     except HTTPError as e:
         print(e)
         exit()
-
-
     '''
-    page = urlopen('https://www.tgju.org/currency')
+      
     indexes = dict()
 
+    #get currency data
+    page = urlopen('https://www.tgju.org/currency')
     page_bs = BeautifulSoup(page,'html.parser')
 
     price_table = page_bs.find_all('table',{'data-tab-id':"1"})
@@ -28,7 +28,7 @@ def get_data():
     print('-'*50)
     for table in price_table:
         for table_row in table.tbody.children:
-            if type(table_row)== type(table):
+            if isinstance(table_row, Tag):
                 ind_code = table_row.get_attribute_list('data-market-row')[0].partition('_')[2]
                 ind = Index(code_to_name(ind_code),
                                 table_row.td.get_text(),
@@ -36,7 +36,16 @@ def get_data():
                                 )
                 indexes[ind_code] = ind
 
+    #get gold data
+    
+
+    
+
     return indexes
+
+
+
+
 data = get_data()
 
 for key, value in data.items():
