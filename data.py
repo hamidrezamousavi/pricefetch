@@ -80,6 +80,14 @@ def code_to_name(code):
             'hkd':'دلار هنگ کنگ',
             'myr':'رینگیت مالزی',
             'thb':'بات تایلند',
+            'sekee':'سکه امامی',
+            'sekeb':'سکه بهار آزادی',
+            'nim':'نیم سکه',
+            'rob':'ربع سکه',
+
+
+
+
              }
      
     return name.setdefault(code) 
