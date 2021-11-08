@@ -89,7 +89,9 @@ def code_to_name(code):
             'gold_740k':'طلای 18 عیار 740',
             'geram24':'طلای ۲۴ عیار',
             'gold_mini_size':'طلای دست دوم',
-            'goldoz':'اونس جهانی طلا'
+            'goldoz':'اونس جهانی طلا',
+            'bourcind':'شاخص کل بورس',
+
 
 
 

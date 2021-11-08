@@ -100,12 +100,26 @@ def get_data():
     price = data['price']
     t = datetime.fromtimestamp(data['timestamp'])
     time = t.astimezone(timezone('Asia/Tehran')).time()
-     
-    ind = Index('اونس جهانی طلا', price, time)
-    indexes['goldoz'] = ind
+    ind_code = 'goldoz'
+    name = 'اونس جهانی طلا'
+    ind = Index(name, price, time)
+    indexes[ind_code] = ind
     
     
+    #get bource index price
 
+    data = requests.get('http://www.tsetmc.com/Loader.aspx?ParTree=15')     
+    data_bs= BeautifulSoup(data.content.decode(),'html.parser')
+    price_tag = data_bs.table.find('td',text = 'شاخص کل').findNext('td')
+    
+    price = price_tag.text.split(' ')[0]
+    name = 'شاخص کل بورس'
+    ind_code = 'bourcind'
+    time = 'None'
+    ind = Index(name, price, time)
+    indexes[ind_code] = ind
+    
+    
     
     return indexes
 

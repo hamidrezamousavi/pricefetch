@@ -1,15 +1,10 @@
 
 import requests
-from datetime import datetime
+from bs4 import BeautifulSoup
 
-from pytz import timezone
-headers = {
-            'x-access-token': 'goldapi-4kzgtkvp8s6kt-io',
-            'Content-Type': 'application/json'
-            }
-data = requests.get('https://www.goldapi.io/api/XAU/USD', headers=headers)     
-data= data.json()
 
-t = datetime.fromtimestamp(data['timestamp'])
-t = t.astimezone(timezone('Asia/Tehran')) 
-print(t.time(),data['price'])
+data = requests.get('http://www.tsetmc.com/Loader.aspx?ParTree=15')     
+data_bs= BeautifulSoup(data.content.decode(),'html.parser')
+price_tag = data_bs.table.find('td',text = 'شاخص کل').findNext('td')
+price = price_tag.text.split(' ')[0]
+print(price)
