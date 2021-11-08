@@ -1,35 +1,15 @@
-from urllib.request import urlopen
-from bs4 import BeautifulSoup, Tag
-from data import Index, code_to_name
-from selenium import webdriver
-import time
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-gpu")
-browser = webdriver.Chrome(options=chrome_options)
-try:
-    browser.get("https://www.tgju.org/gold-chart")
-    time.sleep(3)
-    print("Page title was '{}'".format(browser.title))
+import requests
+from datetime import datetime
 
+from pytz import timezone
+headers = {
+            'x-access-token': 'goldapi-4kzgtkvp8s6kt-io',
+            'Content-Type': 'application/json'
+            }
+data = requests.get('https://www.goldapi.io/api/XAU/USD', headers=headers)     
+data= data.json()
 
-
-    page = browser.page_source
-    page_bs = BeautifulSoup(page,'html.parser')
-    price_table = page_bs.find('table',{'data-tab-id':'1'})
-
-
-    for table_row in price_table.tbody.children:
-
-        if isinstance(table_row, Tag):
-            ind_code = table_row.get_attribute_list('data-market-row')[0]
-            name = code_to_name(ind_code)
-            price = table_row.td.get_text()
-            time = table_row.find_all('td')[4].get_text()
-
-            ind = Index(name, price, time)
-            print(ind.name,ind.time)
-
-finally:
-    browser.quit()
+t = datetime.fromtimestamp(data['timestamp'])
+t = t.astimezone(timezone('Asia/Tehran')) 
+print(t.time(),data['price'])

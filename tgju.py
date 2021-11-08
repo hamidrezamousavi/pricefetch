@@ -1,9 +1,9 @@
-from urllib.request import urlopen
-from urllib.error import HTTPError, URLError
 from bs4 import BeautifulSoup, Tag
 from selenium import webdriver
 from time import sleep
-
+import requests
+from datetime import datetime
+from pytz import timezone
 from data import Index, code_to_name
 
 def get_data():
@@ -19,7 +19,8 @@ def get_data():
     '''
       
     indexes = dict()
-
+    AWAIT_TIME = 1
+    
     #establish a chrome browser for real time scrap
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")
@@ -29,7 +30,7 @@ def get_data():
     
     #get currency data
     browser.get('https://www.tgju.org/currency')
-    sleep(2)
+    sleep(AWAIT_TIME)
     
     page = browser.page_source
     page_bs = BeautifulSoup(page,'html.parser')
@@ -49,7 +50,7 @@ def get_data():
 
     #get coin data
     browser.get('https://www.tgju.org/coin')
-    sleep(2)
+    sleep(AWAIT_TIME)
     page = browser.page_source
     
     page_bs = BeautifulSoup(page,'html.parser')
@@ -68,7 +69,7 @@ def get_data():
 
     #get coin data
     browser.get('https://www.tgju.org/gold-chart')
-    sleep(2)
+    sleep(AWAIT_TIME)
     page = browser.page_source
        
     page_bs = BeautifulSoup(page,'html.parser')
@@ -89,6 +90,22 @@ def get_data():
     
     browser.quit()
     
+    #get gold world price
+    headers = {
+            'x-access-token': 'goldapi-4kzgtkvp8s6kt-io',
+            'Content-Type': 'application/json'
+            }
+    data = requests.get('https://www.goldapi.io/api/XAU/USD', headers=headers)     
+    data= data.json()
+    price = data['price']
+    t = datetime.fromtimestamp(data['timestamp'])
+    time = t.astimezone(timezone('Asia/Tehran')).time()
+     
+    ind = Index('اونس جهانی طلا', price, time)
+    indexes['goldoz'] = ind
+    
+    
+
     
     return indexes
 
