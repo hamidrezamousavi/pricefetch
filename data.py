@@ -91,6 +91,7 @@ def code_to_name(code):
             'gold_mini_size':'طلای دست دوم',
             'goldoz':'اونس جهانی طلا',
             'bourcind':'شاخص کل بورس',
+            'btc':'بیت کوین',
 
 
 

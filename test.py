@@ -1,10 +1,20 @@
 
 import requests
-from bs4 import BeautifulSoup
+import json
+
+from requests.api import request
 
 
-data = requests.get('http://www.tsetmc.com/Loader.aspx?ParTree=15')     
-data_bs= BeautifulSoup(data.content.decode(),'html.parser')
-price_tag = data_bs.table.find('td',text = 'شاخص کل').findNext('td')
-price = price_tag.text.split(' ')[0]
+
+
+data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+
+price = str(data.json()['bitcoin']['usd'])
+name = 'بیت کوین'
+ind_code = 'btc'
+time = 'None'
+
+ind = Index(name, price, time)
+indexes[ind_code] = ind
+
 print(price)
