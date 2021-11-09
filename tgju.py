@@ -26,6 +26,7 @@ def get_data():
     AWAIT_TIME = 1
     
     #establish a chrome browser for real time scrap
+    
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")
@@ -33,115 +34,133 @@ def get_data():
     
     
     #get currency data
-    browser.get('https://www.tgju.org/currency')
-    sleep(AWAIT_TIME)
+    try:
+        browser.get('https://www.tgju.org/currency')
+        sleep(AWAIT_TIME)
+
+        page = browser.page_source
+        page_bs = BeautifulSoup(page,'html.parser')
+
+        price_table = page_bs.find_all('table',{'data-tab-id':"1"})
+
+
+        for table in price_table:
+            for table_row in table.tbody.children:
+                if isinstance(table_row, Tag):
+                    ind_code = table_row.get_attribute_list('data-market-row')[0].partition('_')[2]
+                    ind = Index(code_to_name(ind_code),
+                                    table_row.td.get_text(),
+                                    table_row.find_all('td')[4].get_text()
+                                    )
+                    indexes[ind_code] = ind
+        yield indexes,'Currency\'s data gathering is finished'
+    except Exception as e:
+        yield indexes, 'In currency : '+e
     
-    page = browser.page_source
-    page_bs = BeautifulSoup(page,'html.parser')
-
-    price_table = page_bs.find_all('table',{'data-tab-id':"1"})
-
-    
-    for table in price_table:
-        for table_row in table.tbody.children:
-            if isinstance(table_row, Tag):
-                ind_code = table_row.get_attribute_list('data-market-row')[0].partition('_')[2]
-                ind = Index(code_to_name(ind_code),
-                                table_row.td.get_text(),
-                                table_row.find_all('td')[4].get_text()
-                                )
-                indexes[ind_code] = ind
-    yield indexes,'Currency\'s data gathering is finished'
-
     #get coin data
-    browser.get('https://www.tgju.org/coin')
-    sleep(AWAIT_TIME)
-    page = browser.page_source
-    
-    page_bs = BeautifulSoup(page,'html.parser')
-    price_table = page_bs.find('table',{'class':"data-table market-table market-section-right"})
+    try:
+        browser.get('https://www.tgju.org/coin')
+        sleep(AWAIT_TIME)
+        page = browser.page_source
 
-    for table_row in price_table.tbody.children:
+        page_bs = BeautifulSoup(page,'html.parser')
+        price_table = page_bs.find('table',{'class':"data-table market-table market-section-right"})
 
-        if isinstance(table_row, Tag):
-            ind_code = table_row.get_attribute_list('data-market-row')[0]
-            name = code_to_name(ind_code)
-            price = table_row.td.get_text()
-            time = table_row.find_all('td')[4].get_text()
+        for table_row in price_table.tbody.children:
 
-            ind = Index(name, price, time)
-            indexes[ind_code] = ind
-        
-    yield indexes,'Coin\'s data gathering is finished'
+            if isinstance(table_row, Tag):
+                ind_code = table_row.get_attribute_list('data-market-row')[0]
+                name = code_to_name(ind_code)
+                price = table_row.td.get_text()
+                time = table_row.find_all('td')[4].get_text()
+
+                ind = Index(name, price, time)
+                indexes[ind_code] = ind
+
+        yield indexes,'Coin\'s data gathering is finished'
+    except Exception as e:
+        yield indexes, 'In coin : '+str(e)
     
     
     #get gold data
-    browser.get('https://www.tgju.org/gold-chart')
-    sleep(AWAIT_TIME)
-    page = browser.page_source
-       
-    page_bs = BeautifulSoup(page,'html.parser')
-    price_table = page_bs.find('table',{'data-tab-id':'1'})
+    try:
+        browser.get('https://www.tgju.org/gold-chart')
+        sleep(AWAIT_TIME)
+        page = browser.page_source
 
+        page_bs = BeautifulSoup(page,'html.parser')
+        price_table = page_bs.find('table',{'data-tab-id':'1'})
+
+
+        for table_row in price_table.tbody.children:
+
+            if isinstance(table_row, Tag):
+                ind_code = table_row.get_attribute_list('data-market-row')[0]
+                name = code_to_name(ind_code)
+                price = table_row.td.get_text()
+                time = table_row.find_all('td')[4].get_text()
+
+                ind = Index(name, price, time)
+                indexes[ind_code] = ind
+
+        yield indexes,'Gold\'s data gathering is finished'
+    except Exception as e:
+        yield indexes, 'In gold : '+str(e)
     
-    for table_row in price_table.tbody.children:
-
-        if isinstance(table_row, Tag):
-            ind_code = table_row.get_attribute_list('data-market-row')[0]
-            name = code_to_name(ind_code)
-            price = table_row.td.get_text()
-            time = table_row.find_all('td')[4].get_text()
-
-            ind = Index(name, price, time)
-            indexes[ind_code] = ind
-    
-    yield indexes,'Gold\'s data gathering is finished'
-
 
     browser.quit()
     
     #get gold world price
-    headers = {
-            'x-access-token': 'goldapi-4kzgtkvp8s6kt-io',
-            'Content-Type': 'application/json'
-            }
-    data = requests.get('https://www.goldapi.io/api/XAU/USD', headers=headers)     
-    data= data.json()
-    price = data['price']
-    t = datetime.fromtimestamp(data['timestamp'])
-    time = t.astimezone(timezone('Asia/Tehran')).time()
-    ind_code = 'goldoz'
-    name = 'اونس جهانی طلا'
-    ind = Index(name, price, time)
-    indexes[ind_code] = ind
-    
-    yield indexes,'World Gold\'s data gathering is finished'
+    try:
+        headers = {
+                'x-access-token': 'goldapi-4kzgtkvp8s6kt-io',
+                'Content-Type': 'application/json'
+                }
+        data = requests.get('https://www.goldapi.io/api/XAU/USD', headers=headers)     
+        data= data.json()
+        price = data['price']
+        t = datetime.fromtimestamp(data['timestamp'])
+        time = t.astimezone(timezone('Asia/Tehran')).time()
+        ind_code = 'goldoz'
+        name = 'اونس جهانی طلا'
+        ind = Index(name, price, time)
+        indexes[ind_code] = ind
+
+        yield indexes,'World Gold\'s data gathering is finished'
+    except Exception as e:
+        yield indexes, 'In world gold : '+str(e)
     
     #get bource index price
-    data = requests.get('http://www.tsetmc.com/Loader.aspx?ParTree=15')     
-    data_bs= BeautifulSoup(data.content.decode(),'html.parser')
-    price_tag = data_bs.table.find('td',text = 'شاخص کل').findNext('td')
-    
-    price = price_tag.text.split(' ')[0]
-    name = 'شاخص کل بورس'
-    ind_code = 'bourcind'
-    time = 'None'
-    ind = Index(name, price, time)
-    indexes[ind_code] = ind
-    
-    yield indexes,'Bource index\'s data gathering is finished'
-    
+    try:
+        data = requests.get('http://www.tsetmc.com/Loader.aspx?ParTree=15')     
+        data_bs= BeautifulSoup(data.content.decode(),'html.parser')
+        price_tag = data_bs.table.find('td',text = 'شاخص کل').findNext('td')
+
+        price = price_tag.text.split(' ')[0]
+        name = 'شاخص کل بورس'
+        ind_code = 'bourcind'
+        time = 'None'
+        ind = Index(name, price, time)
+        indexes[ind_code] = ind
+
+        yield indexes,'Bource index\'s data gathering is finished'
+    except Exception as e:
+        yield indexes, 'In bource : '+str(e)
+        
     #get bitcoin price
-    data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+    try:
+        data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
 
-    price = str(data.json()['bitcoin']['usd'])
-    name = 'بیت کوین'
-    ind_code = 'btc'
-    time = 'None'
+        price = str(data.json()['bitcoin']['usd'])
+        name = 'بیت کوین'
+        ind_code = 'btc'
+        time = 'None'
 
-    ind = Index(name, price, time)
-    indexes[ind_code] = ind
-    yield indexes,'BitCoin\'s data gathering is finished'
+        ind = Index(name, price, time)
+        indexes[ind_code] = ind
+        yield indexes,'BitCoin\'s data gathering is finished'
+    except Exception as e:
+        yield indexes, 'In bitcoin : '+str(e)
     
     
 
