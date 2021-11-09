@@ -6,19 +6,23 @@ from datetime import datetime
 from pytz import timezone
 from data import Index, code_to_name
 
+
+
 def get_data():
     '''
-    try:
-        page = urlopen('https://www.tgju.org/currency')
-    except URLError as e:
-        print(e)
-        exit()
-    except HTTPError as e:
-        print(e)
-        exit()
+    this is coroutine that yield gathered data and related message 
+    in 6 stages.Usage pattern of this coroutine is like below
+    
+    get_data = get_data()
+    collected_data = dict()
+
+    for data, msg in get_data:
+        print(msg)
+        collected_data = data
     '''
       
     indexes = dict()
+    #this is time that script awatie to browse page update 
     AWAIT_TIME = 1
     
     #establish a chrome browser for real time scrap
@@ -37,7 +41,7 @@ def get_data():
 
     price_table = page_bs.find_all('table',{'data-tab-id':"1"})
 
-    print('-'*50)
+    
     for table in price_table:
         for table_row in table.tbody.children:
             if isinstance(table_row, Tag):
@@ -47,6 +51,7 @@ def get_data():
                                 table_row.find_all('td')[4].get_text()
                                 )
                 indexes[ind_code] = ind
+    yield indexes,'Currency\'s data gathering is finished'
 
     #get coin data
     browser.get('https://www.tgju.org/coin')
@@ -66,8 +71,11 @@ def get_data():
 
             ind = Index(name, price, time)
             indexes[ind_code] = ind
-
-    #get coin data
+        
+    yield indexes,'Coin\'s data gathering is finished'
+    
+    
+    #get gold data
     browser.get('https://www.tgju.org/gold-chart')
     sleep(AWAIT_TIME)
     page = browser.page_source
@@ -87,7 +95,9 @@ def get_data():
             ind = Index(name, price, time)
             indexes[ind_code] = ind
     
-    
+    yield indexes,'Gold\'s data gathering is finished'
+
+
     browser.quit()
     
     #get gold world price
@@ -105,9 +115,9 @@ def get_data():
     ind = Index(name, price, time)
     indexes[ind_code] = ind
     
+    yield indexes,'World Gold\'s data gathering is finished'
     
     #get bource index price
-
     data = requests.get('http://www.tsetmc.com/Loader.aspx?ParTree=15')     
     data_bs= BeautifulSoup(data.content.decode(),'html.parser')
     price_tag = data_bs.table.find('td',text = 'شاخص کل').findNext('td')
@@ -119,7 +129,7 @@ def get_data():
     ind = Index(name, price, time)
     indexes[ind_code] = ind
     
-    
+    yield indexes,'Bource index\'s data gathering is finished'
     
     #get bitcoin price
     data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
@@ -131,14 +141,21 @@ def get_data():
 
     ind = Index(name, price, time)
     indexes[ind_code] = ind
+    yield indexes,'BitCoin\'s data gathering is finished'
     
-    return indexes
+    
 
 
 
 
-data = get_data()
+get_data = get_data()
 
-for key, value in data.items():
+gather_data = dict()
+
+for data, msg in get_data:
+    print(msg)
+    gather_data = data
+    
+for key, value in gather_data.items():
     print(f'cur {value.name} code is {key} and price is{value.value} and time{value.time}')
 
