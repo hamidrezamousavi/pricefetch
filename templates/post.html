@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Exchange Rate</title>
+
+<link rel="stylesheet" href="style.css">
+<script>
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+</script>
+
+</head>
+
+<body>
+  
+    
+  
+	<textarea name="message" rows="10" cols="50">
+	  {% for msg in message |reverse%}
+    {{msg}}
+    {% endfor %}
+    
+	</textarea>
+  
+  <form action="/"  method="post" id = 1 >
+    
+  </form>
+  
+  <script>sleep(2000).then(() => {
+    document.getElementById("1").submit();
+  })</script>
+
+  </body>
+</html>
+

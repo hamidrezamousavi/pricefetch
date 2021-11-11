@@ -167,14 +167,15 @@ def get_data():
 
 
 
-get_data = get_data()
-
-gather_data = dict()
-
-for data, msg in get_data:
-    print(msg)
-    gather_data = data
-    
-for key, value in gather_data.items():
-    print(f'cur {value.name} code is {key} and price is{value.value} and time{value.time}')
-
+#get_data = get_data()
+#
+#gather_data = dict()
+#
+#for data, msg in get_data:
+#    print(msg)
+#    gather_data = data
+#    
+#for key, value in gather_data.items():
+#    print(f'cur {value.name} code is {key} and price is{value.value} and time{value.time}')
+# 
+#
