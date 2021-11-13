@@ -1,5 +1,5 @@
 from typing import List
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 import requests
 from datetime import datetime
 from pytz import timezone
@@ -76,12 +76,7 @@ def index():
         if request.form.get("save"):
             save_form(request.form, indexes)
             return render_template('resualt.html',message = message, indexes = indexes)
-        
-        elif request.form.get("download"):
-          
-          
-           return render_template('resualt.html',message = message, indexes = indexes)
-        
+                        
         else:    
             try:
                 indexes,msg = next(too)
@@ -95,7 +90,11 @@ def index():
     message.clear()
     return render_template('index.html')
 
+@app.route('/download')
+def download():
+    return send_file( path_or_file='todo.txt',as_attachment=True,download_name='d1.txt')
 
+   
 
 
 if __name__=="__main__":
