@@ -72,9 +72,16 @@ def index():
     global too
     global indexes   
     if request.method == "POST":
+        
         if request.form.get("save"):
             save_form(request.form, indexes)
             return render_template('resualt.html',message = message, indexes = indexes)
+        
+        elif request.form.get("download"):
+          
+          
+           return render_template('resualt.html',message = message, indexes = indexes)
+        
         else:    
             try:
                 indexes,msg = next(too)

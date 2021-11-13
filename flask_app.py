@@ -30,23 +30,7 @@ def foo():
     except Exception as e:
         yield indexes, 'In world gold : '+str(e)
     
-    #get bource index price
-    try:
-        data = requests.get('http://www.tsetmc.com/Loader.aspx?ParTree=15')     
-        data_bs= BeautifulSoup(data.content.decode(),'html.parser')
-        price_tag = data_bs.table.find('td',text = 'شاخص کل').findNext('td')
-
-        price = price_tag.text.split(' ')[0]
-        name = 'شاخص کل بورس'
-        ind_code = 'bourcind'
-        time = 'None'
-        ind = Index(name, price, time)
-        indexes[ind_code] = ind
-
-        yield indexes,'Bource index\'s data gathering is finished'
-    except Exception as e:
-        yield indexes, 'In bource : '+str(e)
-        
+    
     #get bitcoin price
     try:
         data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
@@ -88,9 +72,16 @@ def index():
     global too
     global indexes   
     if request.method == "POST":
+        
         if request.form.get("save"):
             save_form(request.form, indexes)
             return render_template('resualt.html',message = message, indexes = indexes)
+        
+        elif request.form.get("download"):
+          
+          
+           return render_template('resualt.html',message = message, indexes = indexes)
+        
         else:    
             try:
                 indexes,msg = next(too)
