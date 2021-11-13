@@ -1,4 +1,4 @@
-from typing import List
+from typing import Iterator, List
 from flask import Flask, render_template, request, send_file
 import requests
 from datetime import datetime
@@ -81,6 +81,8 @@ def index():
             try:
                 indexes,msg = next(too)
                 message.append(msg)
+            except ValueError as err:
+                print(err)
             except StopIteration:
                 # preper new get_data genetator for next fetch request
                 too = foo()
