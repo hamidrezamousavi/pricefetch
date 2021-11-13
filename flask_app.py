@@ -5,6 +5,7 @@ from datetime import datetime
 from pytz import timezone
 from data import Index, code_to_name
 from bs4 import BeautifulSoup, Tag
+from fileoperation import saveDataOnFile, lastDataOnFile    
 #import tgju
 def foo():
           
@@ -63,6 +64,7 @@ def foo():
     
 
 def save_form(formrequest, indexes):
+    #this block update indexes based on form manual changes 
     #because request.form return multidict value and time have same key
     #so in every for loop first value is catch then invoke next funtion 
     # to catch time
@@ -72,6 +74,8 @@ def save_form(formrequest, indexes):
             indexes[key].value = value
             b = next(request_itarator)
             indexes[key].time = b[1]
+    
+    saveDataOnFile(indexes,'numbers.json')
     return indexes
 
 too = foo()

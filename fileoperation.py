@@ -17,20 +17,20 @@ def decode_index(data):
 
 def saveDataOnFile(indexes,filepath):
 
-    with open(filepath, 'r') as f_obj:
+    with open(filepath, 'r',encoding="utf8") as f_obj:
         try:#catch empty file exception 
             pervious_indexs = json.load(f_obj)
         except :
             pervious_indexs = []
     pervious_indexs.append(indexes)
-    
-    with open(filepath, 'w') as f_obj:
-        json.dump(pervious_indexs, f_obj,cls=IndexEncoder)
+   
+    with open(filepath, 'w',encoding="utf8") as f_obj:
+        json.dump(pervious_indexs, f_obj,cls=IndexEncoder, ensure_ascii=False)
 
 
 
 def lastDataOnFile(filepath):
-    with open(filepath, 'r') as f_obj:
+    with open(filepath, 'r',encoding="utf8") as f_obj:
         indexs_list = json.load(f_obj)
     for row in indexs_list:
         for item in row:
