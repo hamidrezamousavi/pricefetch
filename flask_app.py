@@ -92,9 +92,12 @@ def index():
     message.clear()
     return render_template('index.html')
 
-@app.route('/download')
-def download():
+@app.route('/download1')
+def download1():
     return send_file( path_or_file='todo.txt',as_attachment=True,download_name='d1.txt')
+@app.route('/download2')
+def download2():
+    return send_file( path_or_file='todo.txt',as_attachment=True,download_name='d2.txt')
 
    
 
