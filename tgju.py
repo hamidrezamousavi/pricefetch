@@ -26,7 +26,7 @@ def get_data():
     AWAIT_TIME = 1
     
     #establish a chrome browser for real time scrap
-    
+     yield indexes, 'Gathering process is start'
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")

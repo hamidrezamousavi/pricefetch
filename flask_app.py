@@ -6,8 +6,8 @@ from bs4 import BeautifulSoup, Tag
 
 from data import Index, code_to_name
 from tgju import get_data
-from fileoperation import saveDataOnFile, lastDataOnFile    
-    
+from fileoperation import saveDataOnFile   
+from render import renderPage1  
 
 def save_form(formrequest, indexes):
     #this block update indexes based on form manual changes 
@@ -56,7 +56,8 @@ def index():
 
 @app.route('/download1')
 def download1():
-    return send_file( path_or_file='todo.txt',as_attachment=True,download_name='d1.txt')
+    renderPage1()
+    return send_file( path_or_file='page1.jpg',as_attachment=True,download_name='page1.jpg')
 @app.route('/download2')
 def download2():
     return send_file( path_or_file='todo.txt',as_attachment=True,download_name='d2.txt')
