@@ -1,4 +1,5 @@
-1- remove url from script to another file
+1- remove url and archive file from script to another file
 2- check git and files property to remove personal information
 3- check for exception like opening site or changes in fetch data
-    
+4- make sure download button press after save 
+5- check if price change widely number take rigth place

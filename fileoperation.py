@@ -39,4 +39,3 @@ def getDataOnFile(filepath):
     
     return indexs_list
 
-print(getDataOnFile('indexarchive.json')[1]['eur'].value)
