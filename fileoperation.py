@@ -29,13 +29,14 @@ def saveDataOnFile(indexes,filepath):
 
 
 
-def lastDataOnFile(filepath):
+def getDataOnFile(filepath):
     with open(filepath, 'r',encoding="utf8") as f_obj:
         indexs_list = json.load(f_obj)
-    for row in indexs_list:
-        for item in row:
-            for key in item:
-                item[key] = decode_index(item[key])
     
-    return indexs_list[-1][0]
+    for index in indexs_list:
+        for key in index:
+            index[key] = decode_index(index[key])
+    
+    return indexs_list
 
+print(getDataOnFile('indexarchive.json')[1]['eur'].value)
