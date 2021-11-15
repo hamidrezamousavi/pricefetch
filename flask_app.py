@@ -4,7 +4,7 @@ from datetime import datetime
 from pytz import timezone
 from bs4 import BeautifulSoup, Tag
 
-from data import Index, code_to_name
+from data import initTotalIndexs
 from tgju import get_data
 from fileoperation import saveDataOnFile   
 from render import renderPage1  
@@ -25,6 +25,7 @@ def save_form(formrequest, indexes):
     return indexes
 
 get_data_iterator = get_data()
+total_indexs = initTotalIndexs()
 indexes = dict()
 message = list()
 app = Flask(__name__)
@@ -36,8 +37,8 @@ def index():
     if request.method == "POST":
         
         if request.form.get("save"):
-            save_form(request.form, indexes)
-            return render_template(path.resualt_html,message = message, indexes = indexes)
+            save_form(request.form, total_indexs)
+            return render_template(path.resualt_html,message = message, indexes = total_indexs)
                         
         else:    
             try:
@@ -48,7 +49,9 @@ def index():
             except StopIteration:
                 # preper new get_data genetator for next fetch request
                 get_data_iterator = get_data()
-                return render_template(path.resualt_html,message = message, indexes = indexes)
+                #because it possible some index dont gather so with total index trace wanted index 
+                total_indexs.update(indexes)
+                return render_template(path.resualt_html,message = message, indexes = total_indexs)
             return render_template(path.post_html,message = message )
 
     message.clear()

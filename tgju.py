@@ -35,6 +35,7 @@ def get_data():
     
     #get currency data
     try:
+        a = 1/0
         browser.get(path.currency_url)
         sleep(AWAIT_TIME)
 
@@ -55,7 +56,7 @@ def get_data():
                     indexes[ind_code] = ind
         yield indexes,'Currency\'s data gathering is finished'
     except Exception as e:
-        yield indexes, 'In currency : '+e
+        yield indexes, 'In currency : '+ str(e)
     
     #get coin data
     try:
