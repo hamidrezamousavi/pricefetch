@@ -6,7 +6,7 @@ from bidi.algorithm import get_display
 from flask.templating import render_template
 from data import Index
 from fileoperation import getDataOnFile
-
+import path
 
 def setColor(diff = None):
     RED = "#ff0000"
@@ -52,14 +52,14 @@ def prepare_text(text):
 
 def renderPage1():
     
-    indexs_list = getDataOnFile('indexarchive.json')
+    indexs_list = getDataOnFile(path.indexarchive)
     last_indexs = indexs_list[-1]
     prv_indexs = indexs_list[-2]
-    img = Image.open('page1_tepl.jpg')
+    img = Image.open(path.page1_tepl)
     d = ImageDraw.Draw(img)  
     
     color = setColor()
-    font = ImageFont.truetype("BNAZANIN_0.ttf", 48)
+    font = ImageFont.truetype(path.BNAZANIN, 48)
     text = prepare_text(last_indexs['dollar_rl'].name)
     d.text((620, 90), text, fill=color, anchor="rm", font=font)
     
@@ -73,7 +73,7 @@ def renderPage1():
     
     #******************************
     color = setColor()
-    font = ImageFont.truetype("BNAZANIN_0.ttf", 48)
+    font = ImageFont.truetype(path.BNAZANIN, 48)
     text = prepare_text(last_indexs['eur'].name)
     d.text((620, 160), text, fill=color, anchor="rm", font=font)
     
@@ -87,7 +87,7 @@ def renderPage1():
     
 #******************************
     color = setColor()
-    font = ImageFont.truetype("BNAZANIN_0.ttf", 48)
+    font = ImageFont.truetype(path.BNAZANIN, 48)
     text = prepare_text(last_indexs['aed'].name)
     d.text((620, 240), text, fill=color, anchor="rm", font=font)
     
@@ -101,7 +101,7 @@ def renderPage1():
 
 #******************************
     color = setColor()
-    font = ImageFont.truetype("BNAZANIN_0.ttf", 48)
+    font = ImageFont.truetype(path.BNAZANIN, 48)
     text = prepare_text(last_indexs['try'].name)
     d.text((620, 320), text, fill=color, anchor="rm", font=font)
     
@@ -115,7 +115,7 @@ def renderPage1():
     
 #******************************
     color = setColor()
-    font = ImageFont.truetype("BNAZANIN_0.ttf", 42)
+    font = ImageFont.truetype(path.BNAZANIN, 42)
     text = prepare_text(last_indexs['geram18'].name)
     d.text((620, 400), text, fill=color, anchor="rm", font=font)
     
@@ -130,7 +130,7 @@ def renderPage1():
     
 #******************************
     color = setColor()
-    font = ImageFont.truetype("BNAZANIN_0.ttf", 42)
+    font = ImageFont.truetype(path.BNAZANIN, 42)
     text = prepare_text(last_indexs['sekee'].name)
     d.text((620, 480), text, fill=color, anchor="rm", font=font)
     
@@ -144,7 +144,7 @@ def renderPage1():
         
 #******************************
     color = setColor()
-    font = ImageFont.truetype("BNAZANIN_0.ttf", 42)
+    font = ImageFont.truetype(path.BNAZANIN, 42)
     text = prepare_text(last_indexs['btc'].name)
     d.text((620, 560), text, fill=color, anchor="rm", font=font)
     
@@ -157,7 +157,7 @@ def renderPage1():
     d.text((170, 560), text, fill=color, anchor="mm", font=font)
 #******************************
     color = setColor()
-    font = ImageFont.truetype("BNAZANIN_0.ttf", 42)
+    font = ImageFont.truetype(path.BNAZANIN, 42)
     text = prepare_text(last_indexs['bourcind'].name)
     d.text((700, 640), text, fill=color, anchor="rm", font=font)
     
@@ -170,7 +170,7 @@ def renderPage1():
     d.text((170, 640), text, fill=color, anchor="mm", font=font)
                   
     
-    img.save('page1.jpg')
+    img.save(path.page1)
     #img.show()
 
 

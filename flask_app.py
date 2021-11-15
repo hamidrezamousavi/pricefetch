@@ -8,7 +8,7 @@ from data import Index, code_to_name
 from tgju import get_data
 from fileoperation import saveDataOnFile   
 from render import renderPage1  
-
+import path
 def save_form(formrequest, indexes):
     #this block update indexes based on form manual changes 
     #because request.form return multidict value and time have same key
@@ -21,7 +21,7 @@ def save_form(formrequest, indexes):
             b = next(request_itarator)
             indexes[key].time = b[1]
     
-    saveDataOnFile(indexes,'indexarchive.json')
+    saveDataOnFile(indexes,path.indexarchive)
     return indexes
 
 get_data_iterator = get_data()
@@ -37,7 +37,7 @@ def index():
         
         if request.form.get("save"):
             save_form(request.form, indexes)
-            return render_template('resualt.html',message = message, indexes = indexes)
+            return render_template(path.resualt_html,message = message, indexes = indexes)
                         
         else:    
             try:
@@ -48,16 +48,16 @@ def index():
             except StopIteration:
                 # preper new get_data genetator for next fetch request
                 get_data_iterator = get_data()
-                return render_template('resualt.html',message = message, indexes = indexes)
-            return render_template('post.html',message = message )
+                return render_template(path.resualt_html,message = message, indexes = indexes)
+            return render_template(path.post_html,message = message )
 
     message.clear()
-    return render_template('index.html')
+    return render_template(path.index_html)
 
 @app.route('/download1')
 def download1():
     renderPage1()
-    return send_file( path_or_file='page1.jpg',as_attachment=True,download_name='page1.jpg')
+    return send_file( path_or_file=path.page1,as_attachment=True,download_name='page1.jpg')
 @app.route('/download2')
 def download2():
     return send_file( path_or_file='todo.txt',as_attachment=True,download_name='d2.txt')

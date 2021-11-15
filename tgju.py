@@ -5,7 +5,7 @@ import requests
 from datetime import datetime
 from pytz import timezone
 from data import Index, code_to_name
-
+import path
 
 
 def get_data():
@@ -26,7 +26,7 @@ def get_data():
     AWAIT_TIME = 1
     
     #establish a chrome browser for real time scrap
-     yield indexes, 'Gathering process is start'
+    yield indexes, 'Gathering process is start'
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")
@@ -35,7 +35,7 @@ def get_data():
     
     #get currency data
     try:
-        browser.get('https://www.tgju.org/currency')
+        browser.get(path.currency_url)
         sleep(AWAIT_TIME)
 
         page = browser.page_source
@@ -59,7 +59,7 @@ def get_data():
     
     #get coin data
     try:
-        browser.get('https://www.tgju.org/coin')
+        browser.get(path.coin_url)
         sleep(AWAIT_TIME)
         page = browser.page_source
 
@@ -84,7 +84,7 @@ def get_data():
     
     #get gold data
     try:
-        browser.get('https://www.tgju.org/gold-chart')
+        browser.get(path.gold_url)
         sleep(AWAIT_TIME)
         page = browser.page_source
 
@@ -116,7 +116,7 @@ def get_data():
                 'x-access-token': 'goldapi-4kzgtkvp8s6kt-io',
                 'Content-Type': 'application/json'
                 }
-        data = requests.get('https://www.goldapi.io/api/XAU/USD', headers=headers)     
+        data = requests.get(path.world_gold_url, headers=headers)     
         data= data.json()
         price = data['price']
         t = datetime.fromtimestamp(data['timestamp'])
@@ -132,7 +132,7 @@ def get_data():
     
     #get bource index price
     try:
-        data = requests.get('http://www.tsetmc.com/Loader.aspx?ParTree=15')     
+        data = requests.get(path.bource_url)     
         data_bs= BeautifulSoup(data.content.decode(),'html.parser')
         price_tag = data_bs.table.find('td',text = 'شاخص کل').findNext('td')
 
@@ -149,7 +149,7 @@ def get_data():
         
     #get bitcoin price
     try:
-        data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+        data = requests.get(path.bitcoin_url)
 
         price = str(data.json()['bitcoin']['usd'])
         name = 'بیت کوین'
@@ -167,15 +167,3 @@ def get_data():
 
 
 
-#get_data = get_data()
-#
-#gather_data = dict()
-#
-#for data, msg in get_data:
-#    print(msg)
-#    gather_data = data
-#    
-#for key, value in gather_data.items():
-#    print(f'cur {value.name} code is {key} and price is{value.value} and time{value.time}')
-# 
-#
