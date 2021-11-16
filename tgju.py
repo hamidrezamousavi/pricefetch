@@ -35,7 +35,7 @@ def get_data():
     
     #get currency data
     try:
-        a = 1/0
+       
         browser.get(path.currency_url)
         sleep(AWAIT_TIME)
 
@@ -133,14 +133,23 @@ def get_data():
     
     #get bource index price
     try:
-        data = requests.get(path.bource_url)     
-        data_bs= BeautifulSoup(data.content.decode(),'html.parser')
-        price_tag = data_bs.table.find('td',text = 'شاخص کل').findNext('td')
+        #site refuse python agent so change to mozila
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36' }
 
-        price = price_tag.text.split(' ')[0]
-        name = 'شاخص کل بورس'
+        data = requests.get(path.bource_url, headers = headers).content.decode()    
+        #data is text below code parse needed informtaion
+        cvis = data.find("close_value")
+        clis = data[cvis:cvis+40].find(':')
+        cois = data[cvis:cvis+40].find(',')
+        price = data[cvis+clis+1:cvis+cois]
+               
+        jtis = data.find("jalali_date_time")
+        clis = data[jtis:jtis+40].find(':')
+        cois = data[jtis:jtis+40].find(',')
+        time = data[jtis+clis+2:jtis+cois-1]
+        
         ind_code = 'bourcind'
-        time = 'None'
+        name = code_to_name(ind_code)
         ind = Index(name, price, time)
         indexes[ind_code] = ind
 
