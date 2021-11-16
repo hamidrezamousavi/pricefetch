@@ -1,3 +1,5 @@
+import jdatetime
+
 
 request_indx = {
             'dollar_rl':'دلار',
@@ -46,7 +48,30 @@ request_indx = {
             'btc':'بیت کوین',
              }
 
-
+months = {
+        'Far':'فروردین',
+        'Ord':'اردیبهشت',
+        'Kho':'خرداد',
+        'Tir':'تیر',
+        'Mor':'مرداد',
+        'Sha':'شهریور',
+        'Meh':'مهر',
+        'Aba':'آبان',
+        'Aza':'آذر',
+        'Dey':'دی',
+        'Bah':'بهمن',
+        'Esf':'اسفند',
+        }
+weekdays = {
+        'Sat':'شنبه',
+        'Sun':'یکشنبه',
+        'Mon':'دوشنبه',
+        'Tue':'سه شنبه',
+        'Wed':'چهارشنبه',
+        'Thu':'پنجشنبه',
+        'Fri':'جمعه',
+        }
+    
 
 class Index:
     def __init__(self,name:str, value:str, time:str) -> None:
@@ -103,3 +128,11 @@ def initTotalIndexs():
     
     return total_indexs
  
+
+
+
+class DateTime:
+    date_time = jdatetime.datetime.now().strftime('%a %d %b %Y %H %M')
+    weekday,day,month,year,hour,minute = date_time.split(' ')
+    weekday =weekdays[weekday]
+    month = months[month] 

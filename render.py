@@ -1,12 +1,12 @@
-from os import replace
-from enum import Enum
 from PIL import Image, ImageDraw, ImageFont
 import arabic_reshaper
 from bidi.algorithm import get_display
-from flask.templating import render_template
-from data import Index
+import jdatetime
+
 from fileoperation import getDataOnFile
 import path
+from data import DateTime
+
 
 def setColor(diff = None):
     RED = "#ff0000"
@@ -21,6 +21,7 @@ def setColor(diff = None):
     else:
         color = GREEN
     return color
+
 
 def strDiff(str1, str2):
     try:
@@ -41,14 +42,12 @@ def strDiff(str1, str2):
         resualt = f'{resualt:0.2f}'
     return str(resualt)
 
-    
- 
-
 
 def prepare_text(text):
     reshaped_text = arabic_reshaper.reshape(text)    
     bidi_text = get_display(reshaped_text)
     return bidi_text
+
 
 def renderPage1():
     
@@ -58,6 +57,19 @@ def renderPage1():
     img = Image.open(path.page1_tepl)
     d = ImageDraw.Draw(img)  
     
+    color = "#ffffff"
+    font = ImageFont.truetype(path.BNAZANIN, 30)
+    text = prepare_text(DateTime.weekday)
+    d.text((740, 20), text, fill=color, anchor="rm", font=font)
+    text = prepare_text(DateTime.day)
+    d.text((600, 20), text, fill=color, anchor="rm", font=font)
+    text = prepare_text(DateTime.month)
+    d.text((550, 20), text, fill=color, anchor="rm", font=font)
+    text = prepare_text(DateTime.year)
+    d.text((500, 20), text, fill=color, anchor="rm", font=font)
+    text = prepare_text(DateTime.hour+':'+DateTime.minute)
+    d.text((100, 20), text, fill=color, anchor="rm", font=font)
+
     color = setColor()
     font = ImageFont.truetype(path.BNAZANIN, 48)
     text = prepare_text(last_indexs['dollar_rl'].name)
