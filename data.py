@@ -1,5 +1,5 @@
 import jdatetime
-
+from pytz import timezone
 
 request_indx = {
             'dollar_rl':'دلار',
@@ -132,7 +132,9 @@ def initTotalIndexs():
 
 
 class DateTime:
-    date_time = jdatetime.datetime.now().strftime('%a %d %b %Y %H %M')
+    date_time = jdatetime.datetime.now()
+    date_time = date_time.astimezone(timezone('Asia/Tehran'))
+    date_time = date_time.strftime('%a %d %b %Y %H %M') 
     weekday,day,month,year,hour,minute = date_time.split(' ')
     weekday =weekdays[weekday]
-    month_str = months[month] 
+    month_str = months[month]  
