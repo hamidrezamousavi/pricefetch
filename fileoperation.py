@@ -1,5 +1,5 @@
 import json
-from data import Index
+from data import Index, DateTime
 
 class IndexEncoder(json.JSONEncoder):
     #define how index object conver to dict
@@ -39,3 +39,6 @@ def getDataOnFile(filepath):
     
     return indexs_list
 
+def fileName():
+    file_name = DateTime.month + DateTime.day + DateTime.hour +DateTime.minute
+    return file_name

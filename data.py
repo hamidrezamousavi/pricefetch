@@ -135,4 +135,4 @@ class DateTime:
     date_time = jdatetime.datetime.now().strftime('%a %d %b %Y %H %M')
     weekday,day,month,year,hour,minute = date_time.split(' ')
     weekday =weekdays[weekday]
-    month = months[month] 
+    month_str = months[month] 
