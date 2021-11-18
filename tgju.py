@@ -108,7 +108,24 @@ def get_data():
     except Exception as e:
         yield indexes, 'In gold : '+str(e)
     
+    #get bource index price
+    try:
+        browser.get(path.bource_url)
+        sleep(AWAIT_TIME)
 
+        page = browser.page_source
+        page_bs = BeautifulSoup(page,'html.parser')
+        value = page_bs.find('li',{'id':'l-bourse'}).span.text
+        time = page_bs.find('em',{ 'id':'dynamic-clock'}).text
+        
+        ind_code = 'bourcind'
+        bource_ind = Index(code_to_name(ind_code), value, time)
+        indexes['bourcind'] = bource_ind
+
+        yield indexes,'Bource index\'s data gathering is finished'
+    except Exception as e:
+        yield indexes, 'In bource : '+str(e)
+    
     browser.quit()
     
     #get gold world price
@@ -130,33 +147,8 @@ def get_data():
         yield indexes,'World Gold\'s data gathering is finished'
     except Exception as e:
         yield indexes, 'In world gold : '+str(e)
-    
-    #get bource index price
-    try:
-        #site refuse python agent so change to mozila
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36' }
-
-        data = requests.get(path.bource_url, headers = headers).content.decode()    
-        #data is text below code parse needed informtaion
-        cvis = data.find("close_value")
-        clis = data[cvis:cvis+40].find(':')
-        cois = data[cvis:cvis+40].find(',')
-        price = data[cvis+clis+1:cvis+cois]
                
-        jtis = data.find("jalali_date_time")
-        clis = data[jtis:jtis+40].find(':')
-        cois = data[jtis:jtis+40].find(',')
-        time = data[jtis+clis+2:jtis+cois-1]
-        
-        ind_code = 'bourcind'
-        name = code_to_name(ind_code)
-        ind = Index(name, price, time)
-        indexes[ind_code] = ind
-
-        yield indexes,'Bource index\'s data gathering is finished'
-    except Exception as e:
-        yield indexes, 'In bource : '+str(e)
-        
+    
     #get bitcoin price
     try:
         data = requests.get(path.bitcoin_url)
