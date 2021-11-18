@@ -63,7 +63,7 @@ def renderPage1():
     d.text((740, 20), text, fill=color, anchor="rm", font=font)
     text = prepare_text(DateTime.day)
     d.text((600, 20), text, fill=color, anchor="rm", font=font)
-    text = prepare_text(DateTime.month)
+    text = prepare_text(DateTime.month_str)
     d.text((550, 20), text, fill=color, anchor="rm", font=font)
     text = prepare_text(DateTime.year)
     d.text((500, 20), text, fill=color, anchor="rm", font=font)
@@ -183,14 +183,4 @@ def renderPage1():
                   
     
     img.save(path.page1)
-    #img.show()
-
-
-
-
-#font = ImageFont.truetype(font_path, size=600)
-#draw = ImageDraw.Draw(img)
-#width_text, height_text = draw.textsize(text, font)
-#
-#offset_x, offset_y = font.getoffset(text)
-#width_text += offset_x
+    
