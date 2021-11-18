@@ -184,3 +184,88 @@ def renderPage1():
     
     img.save(path.page1)
     
+
+def renderPage2():
+    
+    indexs_list = getDataOnFile(path.indexarchive)
+    last_indexs = indexs_list[-1]
+    prv_indexs = indexs_list[-2]
+    img = Image.open(path.page2_tepl)
+    d = ImageDraw.Draw(img)  
+    
+    
+
+    color = setColor()
+    font = ImageFont.truetype(path.BNAZANIN, 48)
+    text = prepare_text(last_indexs['cad'].name)
+    d.text((620, 90), text, fill=color, anchor="rm", font=font)
+    
+    diff = strDiff(last_indexs['cad'].value, prv_indexs['dollar_rl'].value)
+    color = setColor(diff)
+    text = prepare_text(last_indexs['cad'].value)
+    d.text((170, 90), text, fill=color, anchor="mm", font=font)
+    
+    #******************************
+    color = setColor()
+    font = ImageFont.truetype(path.BNAZANIN, 48)
+    text = prepare_text(last_indexs['cad'].name)
+    d.text((620, 90), text, fill=color, anchor="rm", font=font)
+    
+    diff = strDiff(last_indexs['cad'].value, prv_indexs['dollar_rl'].value)
+    color = setColor(diff)
+    text = prepare_text(last_indexs['cad'].value)
+    d.text((170, 90), text, fill=color, anchor="mm", font=font)
+#******************************
+    color = setColor()
+    font = ImageFont.truetype(path.BNAZANIN, 48)
+    text = prepare_text(last_indexs['cad'].name)
+    d.text((620, 90), text, fill=color, anchor="rm", font=font)
+    
+    diff = strDiff(last_indexs['cad'].value, prv_indexs['dollar_rl'].value)
+    color = setColor(diff)
+    text = prepare_text(last_indexs['cad'].value)
+    d.text((170, 90), text, fill=color, anchor="mm", font=font)
+#******************************
+    color = setColor()
+    font = ImageFont.truetype(path.BNAZANIN, 48)
+    text = prepare_text(last_indexs['cad'].name)
+    d.text((620, 90), text, fill=color, anchor="rm", font=font)
+    
+    diff = strDiff(last_indexs['cad'].value, prv_indexs['dollar_rl'].value)
+    color = setColor(diff)
+    text = prepare_text(last_indexs['cad'].value)
+    d.text((170, 90), text, fill=color, anchor="mm", font=font)
+#******************************
+    color = setColor()
+    font = ImageFont.truetype(path.BNAZANIN, 48)
+    text = prepare_text(last_indexs['cad'].name)
+    d.text((620, 90), text, fill=color, anchor="rm", font=font)
+    
+    diff = strDiff(last_indexs['cad'].value, prv_indexs['dollar_rl'].value)
+    color = setColor(diff)
+    text = prepare_text(last_indexs['cad'].value)
+    d.text((170, 90), text, fill=color, anchor="mm", font=font)
+    
+#******************************
+    color = setColor()
+    font = ImageFont.truetype(path.BNAZANIN, 48)
+    text = prepare_text(last_indexs['cad'].name)
+    d.text((620, 90), text, fill=color, anchor="rm", font=font)
+    
+    diff = strDiff(last_indexs['cad'].value, prv_indexs['dollar_rl'].value)
+    color = setColor(diff)
+    text = prepare_text(last_indexs['cad'].value)
+    d.text((170, 90), text, fill=color, anchor="mm", font=font)
+#******************************
+    color = setColor()
+    font = ImageFont.truetype(path.BNAZANIN, 48)
+    text = prepare_text(last_indexs['cad'].name)
+    d.text((620, 90), text, fill=color, anchor="rm", font=font)
+    
+    diff = strDiff(last_indexs['cad'].value, prv_indexs['dollar_rl'].value)
+    color = setColor(diff)
+    text = prepare_text(last_indexs['cad'].value)
+    d.text((170, 90), text, fill=color, anchor="mm", font=font)
+   
+    
+    img.save(path.page2)

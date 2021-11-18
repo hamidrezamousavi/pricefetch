@@ -4,4 +4,6 @@ done 1- remove url and archive file from script to another file
 4- make sure download button press after save 
 5- check if price change widely number take rigth place
 6- if there be a missingvalue in archive file
+8- put color guid in images for inceasing or decreasing
+9- put chech mark to job done 
 ---
