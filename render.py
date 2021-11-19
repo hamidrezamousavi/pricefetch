@@ -57,129 +57,75 @@ def renderPage1():
     img = Image.open(path.page1_tepl)
     d = ImageDraw.Draw(img)  
     
+    font_header = ImageFont.truetype(path.BNAZANIN, 60)
+    font_cur = ImageFont.truetype(path.BNAZANIN, 70)
+    font_diff = ImageFont.truetype(path.BNAZANIN, 50)
+    font_value = ImageFont.truetype(path.BNAZANIN, 70)
+    
+    xweekday =1020
+    xday = 880
+    xmonth = 780
+    xyear = 680
+    xhurlable = 450
+    xhour = 300 
+    yrow = 140
     color = "#ffffff"
-    font = ImageFont.truetype(path.BNAZANIN, 30)
     text = prepare_text(DateTime.weekday)
-    d.text((740, 20), text, fill=color, anchor="rm", font=font)
+    d.text((xweekday, yrow), text, fill=color, anchor="rm", font=font_header)
     text = prepare_text(DateTime.day)
-    d.text((600, 20), text, fill=color, anchor="rm", font=font)
+    d.text((xday, yrow), text, fill=color, anchor="rm", font=font_header)
     text = prepare_text(DateTime.month_str)
-    d.text((550, 20), text, fill=color, anchor="rm", font=font)
+    d.text((xmonth, yrow), text, fill=color, anchor="rm", font=font_header)
     text = prepare_text(DateTime.year)
-    d.text((500, 20), text, fill=color, anchor="rm", font=font)
+    d.text((xyear, yrow), text, fill=color, anchor="rm", font=font_header)
+    text = prepare_text("ساعت")
+    d.text((xhurlable, yrow), text, fill=color, anchor="rm", font=font_header)
     text = prepare_text(DateTime.hour+':'+DateTime.minute)
-    d.text((100, 20), text, fill=color, anchor="rm", font=font)
+    d.text((xhour, yrow), text, fill=color, anchor="rm", font=font_header)
 
-    color = setColor()
-    font = ImageFont.truetype(path.BNAZANIN, 48)
-    text = prepare_text(last_indexs['dollar_rl'].name)
-    d.text((620, 90), text, fill=color, anchor="rm", font=font)
+    font_cur = ImageFont.truetype(path.BNAZANIN, 70)
+    font_diff = ImageFont.truetype(path.BNAZANIN, 50)
+    font_value = ImageFont.truetype(path.BNAZANIN, 70)
     
-    diff = strDiff(last_indexs['dollar_rl'].value, prv_indexs['dollar_rl'].value)
-    text = prepare_text(diff)
-        
-    color = setColor(diff)
-    d.text((370, 90), text, fill=color, anchor="mm", font=font)
-    text = prepare_text(last_indexs['dollar_rl'].value)
-    d.text((170, 90), text, fill=color, anchor="mm", font=font)
+    xcur = 890
+    xdiff = 540
+    xval = 210
+    yrow = 122
+    dyrow = 130
     
-    #******************************
-    color = setColor()
-    font = ImageFont.truetype(path.BNAZANIN, 48)
-    text = prepare_text(last_indexs['eur'].name)
-    d.text((620, 160), text, fill=color, anchor="rm", font=font)
-    
-    diff = strDiff(last_indexs['eur'].value, prv_indexs['eur'].value)
-    text = prepare_text(diff)
-        
-    color = setColor(diff)
-    d.text((370, 160), text, fill=color, anchor="mm", font=font)
-    text = prepare_text(last_indexs['eur'].value)
-    d.text((170, 160), text, fill=color, anchor="mm", font=font)
-    
-#******************************
-    color = setColor()
-    font = ImageFont.truetype(path.BNAZANIN, 48)
-    text = prepare_text(last_indexs['aed'].name)
-    d.text((620, 240), text, fill=color, anchor="rm", font=font)
-    
-    diff = strDiff(last_indexs['aed'].value, prv_indexs['aed'].value)
-    text = prepare_text(diff)
-        
-    color = setColor(diff)
-    d.text((370, 240), text, fill=color, anchor="mm", font=font)
-    text = prepare_text(last_indexs['aed'].value)
-    d.text((170, 240), text, fill=color, anchor="mm", font=font)
+    currency = ['dollar_rl','eur','aed','try','geram18',
+                'sekee']
 
-#******************************
-    color = setColor()
-    font = ImageFont.truetype(path.BNAZANIN, 48)
-    text = prepare_text(last_indexs['try'].name)
-    d.text((620, 320), text, fill=color, anchor="rm", font=font)
+    for cur in currency:
+        color = setColor()
+        text = prepare_text(last_indexs[cur].name)
+        d.text((xcur, yrow:=yrow+dyrow), text, fill=color, anchor="rm", font=font_cur)
+        diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
+        text = prepare_text(diff)
+        color = setColor(diff)
+        d.text((xdiff, yrow), text, fill=color, anchor="mm", font=font_diff)
+        text = prepare_text(last_indexs[cur].value)
+        d.text((xval, yrow), text, fill=color, anchor="mm", font=font_value)
+
+
+    xcur = 1050
+    xdiff = 520
+    xval = 200
+    yrow = 900
+    dyrow = 130
     
-    diff = strDiff(last_indexs['try'].value, prv_indexs['try'].value)
-    text = prepare_text(diff)
-        
-    color = setColor(diff)
-    d.text((370, 320), text, fill=color, anchor="mm", font=font)
-    text = prepare_text(last_indexs['try'].value)
-    d.text((170, 320), text, fill=color, anchor="mm", font=font)
-    
-#******************************
-    color = setColor()
-    font = ImageFont.truetype(path.BNAZANIN, 42)
-    text = prepare_text(last_indexs['geram18'].name)
-    d.text((620, 400), text, fill=color, anchor="rm", font=font)
-    
-    diff = strDiff(last_indexs['geram18'].value, prv_indexs['geram18'].value)
-    text = prepare_text(diff)
-        
-    color = setColor(diff)
-    d.text((370, 400), text, fill=color, anchor="mm", font=font)
-    text = prepare_text(last_indexs['geram18'].value)
-    d.text((170, 400), text, fill=color, anchor="mm", font=font)
-       
-    
-#******************************
-    color = setColor()
-    font = ImageFont.truetype(path.BNAZANIN, 42)
-    text = prepare_text(last_indexs['sekee'].name)
-    d.text((620, 480), text, fill=color, anchor="rm", font=font)
-    
-    diff = strDiff(last_indexs['sekee'].value, prv_indexs['sekee'].value)
-    text = prepare_text(diff)
-        
-    color = setColor(diff)
-    d.text((370, 480), text, fill=color, anchor="mm", font=font)
-    text = prepare_text(last_indexs['sekee'].value)
-    d.text((170, 480), text, fill=color, anchor="mm", font=font)
-        
-#******************************
-    color = setColor()
-    font = ImageFont.truetype(path.BNAZANIN, 42)
-    text = prepare_text(last_indexs['btc'].name)
-    d.text((620, 560), text, fill=color, anchor="rm", font=font)
-    
-    diff = strDiff(last_indexs['btc'].value, prv_indexs['btc'].value)
-    text = prepare_text(diff)
-        
-    color = setColor(diff)
-    d.text((370, 560), text, fill=color, anchor="mm", font=font)
-    text = prepare_text(last_indexs['btc'].value)
-    d.text((170, 560), text, fill=color, anchor="mm", font=font)
-#******************************
-    color = setColor()
-    font = ImageFont.truetype(path.BNAZANIN, 42)
-    text = prepare_text(last_indexs['bourcind'].name)
-    d.text((700, 640), text, fill=color, anchor="rm", font=font)
-    
-    diff = strDiff(last_indexs['bourcind'].value, prv_indexs['bourcind'].value)
-    text = prepare_text(diff)
-        
-    color = setColor(diff)
-    d.text((370, 640), text, fill=color, anchor="mm", font=font)
-    text = prepare_text(last_indexs['bourcind'].value)
-    d.text((170, 640), text, fill=color, anchor="mm", font=font)
+    currency = ['btc','bourcind']
+
+    for cur in currency:
+        color = setColor()
+        text = prepare_text(last_indexs[cur].name)
+        d.text((xcur, yrow:=yrow+dyrow), text, fill=color, anchor="rm", font=font_cur)
+        diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
+        text = prepare_text(diff)
+        color = setColor(diff)
+        d.text((xdiff, yrow), text, fill=color, anchor="mm", font=font_diff)
+        text = prepare_text(last_indexs[cur].value)
+        d.text((xval, yrow), text, fill=color, anchor="mm", font=font_value)
                   
     
     img.save(path.page1)
