@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <title>Exchange Rate</title>
 
-<link rel="stylesheet" href="style.css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
 <script>
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -13,25 +16,28 @@ const sleep = (milliseconds) => {
 
 </head>
 
-<body>
+<body style="background-color:rgb(140, 201, 183);">
   
     
-  
-	<textarea name="message" rows="10" cols="50">
-	  {% for msg in message |reverse%}
-    {{msg}}
-    {% endfor %}
-    
-	</textarea>
-  
-  <form action="/"  method="post" id = 1 >
-    
-  </form>
-  
-  <script>sleep(2000).then(() => {
-    document.getElementById("1").submit();
-  })</script>
+  <div class="container-fluid">
 
-  </body>
+	  
+      
+      {% for msg in message |reverse%}
+      
+      <div class="text-body">
+        <h4>{{msg}}</h4>
+      </div>
+      {% endfor %}
+    
+    <form action="/"  method="post" id = 1 >
+
+    </form>
+
+    <script>sleep(2000).then(() => {
+      document.getElementById("1").submit();
+    })</script>
+  </div>
+</body>
 </html>
 
