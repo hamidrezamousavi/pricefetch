@@ -6,4 +6,5 @@ done 1- remove url and archive file from script to another file
 6- if there be a missingvalue in archive file
 8- put color guid in images for inceasing or decreasing
 9- put chech mark to job done 
+10- put concurrency on work
 ---

@@ -40,5 +40,6 @@ def getDataOnFile(filepath):
     return indexs_list
 
 def fileName():
-    file_name = DateTime.month + DateTime.day + DateTime.hour +DateTime.minute
+    date = DateTime()
+    file_name = date.month + date.day + date.hour +date.minute
     return file_name

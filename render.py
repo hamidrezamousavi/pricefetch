@@ -69,18 +69,19 @@ def renderPage1():
     xhurlable = 450
     xhour = 300 
     yrow = 140
+    date_time = DateTime()
     color = "#ffffff"
-    text = prepare_text(DateTime.weekday)
+    text = prepare_text(date_time.weekday)
     d.text((xweekday, yrow), text, fill=color, anchor="rm", font=font_header)
-    text = prepare_text(DateTime.day)
+    text = prepare_text(date_time.day)
     d.text((xday, yrow), text, fill=color, anchor="rm", font=font_header)
-    text = prepare_text(DateTime.month_str)
+    text = prepare_text(date_time.month_str)
     d.text((xmonth, yrow), text, fill=color, anchor="rm", font=font_header)
-    text = prepare_text(DateTime.year)
+    text = prepare_text(date_time.year)
     d.text((xyear, yrow), text, fill=color, anchor="rm", font=font_header)
     text = prepare_text("ساعت")
     d.text((xhurlable, yrow), text, fill=color, anchor="rm", font=font_header)
-    text = prepare_text(DateTime.hour+':'+DateTime.minute)
+    text = prepare_text(date_time.hour+':'+date_time.minute)
     d.text((xhour, yrow), text, fill=color, anchor="rm", font=font_header)
 
     font_cur = ImageFont.truetype(path.BNAZANIN, 70)

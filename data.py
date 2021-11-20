@@ -132,9 +132,11 @@ def initTotalIndexs():
 
 
 class DateTime:
-    date_time = jdatetime.datetime.now()
-    date_time = date_time.astimezone(timezone('Asia/Tehran'))
-    date_time = date_time.strftime('%a %d %b %Y %H %M') 
-    weekday,day,month,year,hour,minute = date_time.split(' ')
-    weekday =weekdays[weekday]
-    month_str = months[month]  
+    def __init__(self) -> None:
+        
+        self.date_time = jdatetime.datetime.now()
+        self.date_time = self.date_time.astimezone(timezone('Asia/Tehran'))
+        self.date_time = self.date_time.strftime('%a %d %b %Y %H %M') 
+        self.weekday,self.day,self.month,self.year,self.hour,self.minute = self.date_time.split(' ')
+        self.weekday = weekdays[self.weekday]
+        self.month_str = months[self.month]  
