@@ -6,7 +6,7 @@ import jdatetime
 from fileoperation import getDataOnFile
 import path
 from data import DateTime
-
+from utilfunc import rialToToman, strDiff
 
 def setColor(diff = None):
     RED = "#ff0000"
@@ -22,25 +22,6 @@ def setColor(diff = None):
         color = GREEN
     return color
 
-
-def strDiff(str1, str2):
-    try:
-        str1=str1.replace(',','')
-        str2=str2.replace(',','')
-        try:
-            str1 = int(str1)
-        except ValueError:
-            str1 = float(str1)
-        try:
-            str2 = int(str2)
-        except ValueError:
-            str2 = float(str2)
-        resualt = str1 - str2
-    except:
-        return None
-    if isinstance(resualt,float):
-        resualt = f'{resualt:0.2f}'
-    return str(resualt)
 
 
 def prepare_text(text):
@@ -102,10 +83,11 @@ def renderPage1():
         text = prepare_text(last_indexs[cur].name)
         d.text((xcur, yrow:=yrow+dyrow), text, fill=color, anchor="rm", font=font_cur)
         diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
+        diff = rialToToman(diff)
         text = prepare_text(diff)
         color = setColor(diff)
         d.text((xdiff, yrow), text, fill=color, anchor="mm", font=font_diff)
-        text = prepare_text(last_indexs[cur].value)
+        text = prepare_text(rialToToman(last_indexs[cur].value))
         d.text((xval, yrow), text, fill=color, anchor="mm", font=font_value)
 
 
@@ -171,7 +153,7 @@ def renderPage2():
             d.text((xcu, ycu:=ycu+dy), text, fill=color, anchor="rm", font=font_cn)
         diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
         color = setColor(diff)
-        text = prepare_text(last_indexs[cur].value)
+        text = prepare_text(rialToToman(last_indexs[cur].value))
         d.text((xva, yva:=yva+dy), text, fill=color, anchor="mm", font=font_va)
     
     #******************************
@@ -197,7 +179,7 @@ def renderPage2():
             d.text((xcu, ycu:=ycu+dy), text, fill=color, anchor="rm", font=font_cn)
         diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
         color = setColor(diff)
-        text = prepare_text(last_indexs[cur].value)
+        text = prepare_text(rialToToman(last_indexs[cur].value))
         d.text((xva, yva:=yva+dy), text, fill=color, anchor="mm", font=font_va)
     
     #**********once jahany*********
@@ -231,7 +213,7 @@ def renderPage2():
         d.text((500, 1150), text, fill=color, anchor="rm", font=font_cn)
     diff = strDiff(last_indexs['sekeb'].value, prv_indexs['sekeb'].value)
     color = setColor(diff)
-    text = prepare_text(last_indexs['sekeb'].value)
+    text = prepare_text(rialToToman(last_indexs['sekeb'].value))
     d.text((250, 1125), text, fill=color, anchor="mm", font=font_va)
     
     
@@ -241,7 +223,7 @@ def renderPage2():
     d.text((1000, 1235), text, fill=color, anchor="rm", font=font_cr)
     diff = strDiff(last_indexs['nim'].value, prv_indexs['nim'].value)
     color = setColor(diff)
-    text = prepare_text(last_indexs['nim'].value)
+    text = prepare_text(rialToToman(last_indexs['nim'].value))
     d.text((700, 1235), text, fill=color, anchor="mm", font=font_va)
     
 
@@ -251,7 +233,7 @@ def renderPage2():
     d.text((500, 1235), text, fill=color, anchor="rm", font=font_cr)
     diff = strDiff(last_indexs['rob'].value, prv_indexs['rob'].value)
     color = setColor(diff)
-    text = prepare_text(last_indexs['rob'].value)
+    text = prepare_text(rialToToman(last_indexs['rob'].value))
     d.text((250, 1235), text, fill=color, anchor="mm", font=font_va)
 
 
