@@ -66,6 +66,7 @@ def renderPage1():
     d.text((xhour, yrow), text, fill=color, anchor="rm", font=font_header)
 
     font_cur = ImageFont.truetype(path.BNAZANIN, 70)
+    
     font_diff = ImageFont.truetype(path.BNAZANIN, 50)
     font_value = ImageFont.truetype(path.BNAZANIN, 70)
     
@@ -129,6 +130,7 @@ def renderPage2():
     d = ImageDraw.Draw(img)  
     
     font_cr = ImageFont.truetype(path.BNAZANIN, 65)
+    font_cr_s = ImageFont.truetype(path.BNAZANIN, 35)
     font_cn = ImageFont.truetype(path.BNAZANIN, 40)
     font_va = ImageFont.truetype(path.BNAZANIN, 75)
     xcr = 920
@@ -169,10 +171,19 @@ def renderPage2():
     currency_col2 = ['rub','jpy','sek','azn','kwd','iqd','sar','myr']
     for cur in currency_col2:
         color = setColor()
-        text = prepare_text(last_indexs[cur].name.split(' ')[0])
-        d.text((xcr, ycr:=ycr+dy), text, fill=color, anchor="rm", font=font_cr)
+        if cur == 'jpy':
+            name = last_indexs[cur].name.split(' ')[0]
+            text_yen = prepare_text(name[:2])
+            text_100 = prepare_text(name[2:])
+            d.text((xcr, ycr:=ycr+dy), text_yen, fill=color, anchor="rm", font=font_cr)
+            d.text((xcr-55, ycr-5), text_100, fill=color, anchor="rm", font=font_cr_s)
+        
+        else:
+            text = prepare_text(last_indexs[cur].name.split(' ')[0])
+            d.text((xcr, ycr:=ycr+dy), text, fill=color, anchor="rm", font=font_cr)
         try:
             text = prepare_text(last_indexs[cur].name.split(' ')[1])
+            
             d.text((xcu, ycu:=ycu+dy), text, fill=color, anchor="rm", font=font_cn)
         except:
             text = prepare_text(last_indexs[cur].name.split(' ')[0])
