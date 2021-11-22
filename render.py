@@ -163,7 +163,7 @@ def renderPage2():
     ycr = -30
     xcu = xcr    
     ycu = ycr + 50
-    xva = 200
+    xva = 180
     yva = 0
     dy = 125
     
@@ -196,14 +196,13 @@ def renderPage2():
     #**********once jahany*********
     color = setColor()
     text = prepare_text(last_indexs['goldoz'].name.split(' ')[0])
-    d.text((1000, 1100), text, fill=color, anchor="rm", font=font_cr)
+    d.text((1020, 1100), text, fill=color, anchor="rm", font=font_cr)
        
     try:
         text = prepare_text(last_indexs['goldoz'].name.split(' ')[1])
-        d.text((1000, 1150), text, fill=color, anchor="rm", font=font_cn)
+        d.text((1020, 1150), text, fill=color, anchor="rm", font=font_cn)
     except:
-        text = prepare_text(last_indexs['goldoz'].name.split(' ')[0])
-        d.text((1000, 1150), text, fill=color, anchor="rm", font=font_cn)
+        pass
     diff = strDiff(last_indexs['goldoz'].value, prv_indexs['goldoz'].value)
     color = setColor(diff)
     text = prepare_text(last_indexs['goldoz'].value)
@@ -214,24 +213,23 @@ def renderPage2():
     #**************seke ghadim*****
     color = setColor()
     text = prepare_text(last_indexs['sekeb'].name.split(' ')[0])
-    d.text((500, 1100), text, fill=color, anchor="rm", font=font_cr)
+    d.text((520, 1100), text, fill=color, anchor="rm", font=font_cr)
        
     try:
         text = prepare_text(last_indexs['sekeb'].name.split(' ')[1])
-        d.text((500, 1150), text, fill=color, anchor="rm", font=font_cn)
+        d.text((520, 1150), text, fill=color, anchor="rm", font=font_cn)
     except:
-        text = prepare_text(last_indexs['sekeb'].name.split(' ')[0])
-        d.text((500, 1150), text, fill=color, anchor="rm", font=font_cn)
+        pass
     diff = strDiff(last_indexs['sekeb'].value, prv_indexs['sekeb'].value)
     color = setColor(diff)
     text = prepare_text(rialToToman(last_indexs['sekeb'].value))
-    d.text((250, 1125), text, fill=color, anchor="mm", font=font_va)
+    d.text((210, 1125), text, fill=color, anchor="mm", font=font_va)
     
     
     #**************seke nim*****
     color = setColor()
     text = prepare_text(last_indexs['nim'].name)
-    d.text((1000, 1235), text, fill=color, anchor="rm", font=font_cr)
+    d.text((1020, 1235), text, fill=color, anchor="rm", font=font_cr)
     diff = strDiff(last_indexs['nim'].value, prv_indexs['nim'].value)
     color = setColor(diff)
     text = prepare_text(rialToToman(last_indexs['nim'].value))
@@ -241,11 +239,11 @@ def renderPage2():
     #**************seke rob*****
     color = setColor()
     text = prepare_text(last_indexs['rob'].name)
-    d.text((500, 1235), text, fill=color, anchor="rm", font=font_cr)
+    d.text((520, 1235), text, fill=color, anchor="rm", font=font_cr)
     diff = strDiff(last_indexs['rob'].value, prv_indexs['rob'].value)
     color = setColor(diff)
     text = prepare_text(rialToToman(last_indexs['rob'].value))
-    d.text((250, 1235), text, fill=color, anchor="mm", font=font_va)
+    d.text((210, 1235), text, fill=color, anchor="mm", font=font_va)
 
 
     
