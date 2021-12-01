@@ -49,18 +49,18 @@ request_indx = {
              }
 
 months = {
-        'Far':'فروردین',
-        'Ord':'اردیبهشت',
-        'Kho':'خرداد',
-        'Tir':'تیر',
-        'Mor':'مرداد',
-        'Sha':'شهریور',
-        'Meh':'مهر',
-        'Aba':'آبان',
-        'Aza':'آذر',
-        'Dey':'دی',
-        'Bah':'بهمن',
-        'Esf':'اسفند',
+        '01':'فروردین',
+        '02':'اردیبهشت',
+        '03':'خرداد',
+        '04':'تیر',
+        '05':'مرداد',
+        '06':'شهریور',
+        '07':'مهر',
+        '08':'آبان',
+        '09':'آذر',
+        '10':'دی',
+        '11':'بهمن',
+        '12':'اسفند',
         }
 weekdays = {
         'Sat':'شنبه',
@@ -74,11 +74,11 @@ weekdays = {
     
 
 class Index:
-    def __init__(self,name:str, value:str, time:str) -> None:
+    def __init__(self,name:str, value:str, time:str, date:str) -> None:
         self._name = name
         self._value = value
         self._time = time
-    
+        self._date = date
    
     @property
     def name(self):
@@ -116,6 +116,17 @@ class Index:
     @time.getter
     def time(self):
         return self._time
+    @property
+    def date(self):
+        return self._date
+   
+    @date.setter
+    def date(self,date):
+        self._date = date
+
+    @date.getter
+    def date(self):
+        return self._date
 
 def code_to_name(code):
      
@@ -124,7 +135,7 @@ def code_to_name(code):
 def initTotalIndexs():
     total_indexs = dict()
     for id, name  in request_indx.items():
-        total_indexs[id] = Index(name,'0','0')
+        total_indexs[id] = Index(name,'0','0','0')
     
     return total_indexs
  
@@ -136,7 +147,7 @@ class DateTime:
         
         self.date_time = jdatetime.datetime.now()
         self.date_time = self.date_time.astimezone(timezone('Asia/Tehran'))
-        self.date_time = self.date_time.strftime('%a %d %b %Y %H %M') 
-        self.weekday,self.day,self.month,self.year,self.hour,self.minute = self.date_time.split(' ')
+        self.date_time = self.date_time.strftime('%a %d %m %Y %H %M %S') 
+        self.weekday,self.day,self.month,self.year,self.hour,self.minute,self.second = self.date_time.split(' ')
         self.weekday = weekdays[self.weekday]
         self.month_str = months[self.month]  

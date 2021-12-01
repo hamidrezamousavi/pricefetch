@@ -21,17 +21,19 @@
   
   <form action="/"  method="post" id="2" >
     <div class="row">
-      <div class="col-xs-3">name</div>
+      <div class="col-xs-2">name</div>
       <div class="col-xs-5">value</div>
-      <div class="col-xs-4">time</div>
+      <div class="col-xs-3">time</div>
+      <div class="col-xs-2">date</div>
    </div>
         
     {% for id,index in indexes.items()%}
     <div class="row">
-      <label class = "col-xs-3" for={{index.name}}>{{index.name}}:</label>
+      <label class = "col-xs-2" for={{index.name}}>{{index.name}}:</label>
 		  <input value = {{id}} type="hidden" name="index_id">
       <input class="col-xs-5" type="text"  name={{id}} value={{index.value}}>
-		  <input class="col-xs-4"type="text"  name={{id}} value={{index.time}}><br>
+		  <input class="col-xs-3"type="text"  name={{id}} value={{index.time}}>
+		  <input class="col-xs-2"type="text"  name={{id}} value={{index.date}}><br>
     </div>
 		
 	

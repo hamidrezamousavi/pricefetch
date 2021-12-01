@@ -4,7 +4,7 @@ from time import sleep
 import requests
 from datetime import datetime
 from pytz import timezone
-from data import Index, code_to_name
+from data import Index, code_to_name, DateTime
 import path
 
 
@@ -31,8 +31,10 @@ def get_data():
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")
     browser = webdriver.Chrome(options=chrome_options)
-    
-    
+    #get system date
+    date_now = DateTime()
+    time_now= f'{date_now.hour}:{date_now.minute}:{date_now.second}'
+    date_now = f'{date_now.year}-{date_now.month}-{date_now.day}'
     #get currency data
     try:
        
@@ -43,15 +45,17 @@ def get_data():
         page_bs = BeautifulSoup(page,'html.parser')
 
         price_table = page_bs.find_all('table',{'data-tab-id':"1"})
-
-
+        
+        
+        
         for table in price_table:
             for table_row in table.tbody.children:
                 if isinstance(table_row, Tag):
                     ind_code = table_row.get_attribute_list('data-market-row')[0].partition('_')[2]
                     ind = Index(code_to_name(ind_code),
                                     table_row.td.get_text(),
-                                    table_row.find_all('td')[4].get_text()
+                                    table_row.find_all('td')[4].get_text(),
+                                    date_now
                                     )
                     indexes[ind_code] = ind
         yield indexes,'Currency\'s data gathering is finished'
@@ -75,7 +79,7 @@ def get_data():
                 price = table_row.td.get_text()
                 time = table_row.find_all('td')[4].get_text()
 
-                ind = Index(name, price, time)
+                ind = Index(name, price, time, date_now)
                 indexes[ind_code] = ind
 
         yield indexes,'Coin\'s data gathering is finished'
@@ -101,7 +105,7 @@ def get_data():
                 price = table_row.td.get_text()
                 time = table_row.find_all('td')[4].get_text()
 
-                ind = Index(name, price, time)
+                ind = Index(name, price, time, date_now)
                 indexes[ind_code] = ind
 
         yield indexes,'Gold\'s data gathering is finished'
@@ -119,7 +123,7 @@ def get_data():
         time = page_bs.find('em',{ 'id':'dynamic-clock'}).text
         
         ind_code = 'bourcind'
-        bource_ind = Index(code_to_name(ind_code), value, time)
+        bource_ind = Index(code_to_name(ind_code), value, time, date_now)
         indexes['bourcind'] = bource_ind
 
         yield indexes,'Bource index\'s data gathering is finished'
@@ -141,7 +145,7 @@ def get_data():
         time = t.astimezone(timezone('Asia/Tehran')).time()
         ind_code = 'goldoz'
         name = 'اونس جهانی طلا'
-        ind = Index(name, price, time)
+        ind = Index(name, price, time, date_now)
         indexes[ind_code] = ind
 
         yield indexes,'World Gold\'s data gathering is finished'
@@ -156,9 +160,9 @@ def get_data():
         price = str(data.json()['bitcoin']['usd'])
         name = 'بیت کوین'
         ind_code = 'btc'
-        time = 'None'
+        time = time_now
 
-        ind = Index(name, price, time)
+        ind = Index(name, price, time, date_now)
         indexes[ind_code] = ind
         yield indexes,'BitCoin\'s data gathering is finished'
     except Exception as e:

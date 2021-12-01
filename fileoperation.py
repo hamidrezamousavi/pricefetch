@@ -7,13 +7,14 @@ class IndexEncoder(json.JSONEncoder):
         if isinstance(data, Index):
             return dict(name = data.name,
                         value= data.value,
-                        time= data.time)
+                        time= data.time,
+                        date = data.date )
         else:
             return super().default(data)
 
 def decode_index(data):
     #make index from dict
-    return Index(data['name'],data['value'],data['time'])
+    return Index(data['name'],data['value'],data['time'],data['date'])
 
 def saveDataOnFile(indexes,filepath):
 

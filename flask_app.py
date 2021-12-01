@@ -14,12 +14,15 @@ def save_form(formrequest, indexes):
     #because request.form return multidict value and time have same key
     #so in every for loop first value is catch then invoke next funtion 
     # to catch time
+    print(formrequest)
     request_itarator = formrequest.items(multi=True)
     for key, value in request_itarator:
         if key in indexes:
             indexes[key].value = value
             b = next(request_itarator)
             indexes[key].time = b[1]
+            b = next(request_itarator)
+            indexes[key].date = b[1]
     
     saveDataOnFile(indexes,path.indexarchive)
     return indexes
