@@ -147,7 +147,9 @@ class DateTime:
         
         self.date_time = jdatetime.datetime.now()
         self.date_time = self.date_time.astimezone(timezone('Asia/Tehran'))
+        self.date = self.date_time.date()
         self.date_time = self.date_time.strftime('%a %d %m %Y %H %M %S') 
         self.weekday,self.day,self.month,self.year,self.hour,self.minute,self.second = self.date_time.split(' ')
         self.weekday = weekdays[self.weekday]
         self.month_str = months[self.month]  
+

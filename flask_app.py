@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, send_file
 import requests
-from datetime import datetime
+from jdatetime import datetime
 from pytz import timezone
 from bs4 import BeautifulSoup, Tag
 
@@ -14,7 +14,7 @@ def save_form(formrequest, indexes):
     #because request.form return multidict value and time have same key
     #so in every for loop first value is catch then invoke next funtion 
     # to catch time
-    print(formrequest)
+    
     request_itarator = formrequest.items(multi=True)
     for key, value in request_itarator:
         if key in indexes:
@@ -22,7 +22,7 @@ def save_form(formrequest, indexes):
             b = next(request_itarator)
             indexes[key].time = b[1]
             b = next(request_itarator)
-            indexes[key].date = b[1]
+            indexes[key].date = datetime.strptime(b[1],'%Y-%m-%d')
     
     saveDataOnFile(indexes,path.indexarchive)
     return indexes

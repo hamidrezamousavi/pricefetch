@@ -32,9 +32,9 @@ def get_data():
     chrome_options.add_argument("--disable-gpu")
     browser = webdriver.Chrome(options=chrome_options)
     #get system date
-    date_now = DateTime()
-    time_now= f'{date_now.hour}:{date_now.minute}:{date_now.second}'
-    date_now = f'{date_now.year}-{date_now.month}-{date_now.day}'
+    date_time_now = DateTime()
+    time_now= f'{date_time_now.hour}:{date_time_now.minute}:{date_time_now.second}'
+    date_now = date_time_now.date
     #get currency data
     try:
        

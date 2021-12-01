@@ -51,4 +51,7 @@ def rialToToman(number:str)->str:
         number = '0' 
     return number
 
-print(rialToToman("0.0"))
+
+def getIndexHistory(index_code, indexs_list, duration):
+    pass
+

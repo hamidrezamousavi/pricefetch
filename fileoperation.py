@@ -1,20 +1,28 @@
 import json
 from data import Index, DateTime
+from jdatetime import datetime
 
 class IndexEncoder(json.JSONEncoder):
     #define how index object conver to dict
     def default(self, data):
         if isinstance(data, Index):
+            date = data.date.strftime("%Y-%m-%d")
             return dict(name = data.name,
                         value= data.value,
                         time= data.time,
-                        date = data.date )
+                        date = date )
         else:
             return super().default(data)
 
+
+
+
+
+
 def decode_index(data):
     #make index from dict
-    return Index(data['name'],data['value'],data['time'],data['date'])
+    date = datetime.strptime(data['date'],'%Y-%m-%d').date()
+    return Index(data['name'],data['value'],data['time'], date)
 
 def saveDataOnFile(indexes,filepath):
 
@@ -33,7 +41,7 @@ def saveDataOnFile(indexes,filepath):
 def getDataOnFile(filepath):
     with open(filepath, 'r',encoding="utf8") as f_obj:
         indexs_list = json.load(f_obj)
-    
+    print(indexs_list)
     for index in indexs_list:
         for key in index:
             index[key] = decode_index(index[key])

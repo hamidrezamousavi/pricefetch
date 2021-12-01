@@ -17,9 +17,9 @@ def setColor(diff = None):
     elif (diff == '0') or (diff == '0.00'):
         color = WHITE 
     elif diff.find('-')==0:
-        color = RED
+        color = "#ff0000"
     else:
-        color = GREEN
+        color = "#51ff5a"
     return color
 
 
@@ -41,7 +41,7 @@ def renderPage1():
     font_header = ImageFont.truetype(path.BNAZANIN, 60)
     font_cur = ImageFont.truetype(path.BNAZANIN, 70)
     font_diff = ImageFont.truetype(path.BNAZANIN, 50)
-    font_value = ImageFont.truetype(path.BNAZANIN, 70)
+    font_value = ImageFont.truetype(path.Oswald, 70)
     
     xweekday =1020
     xday = 880
@@ -65,10 +65,6 @@ def renderPage1():
     text = prepare_text(date_time.hour+':'+date_time.minute)
     d.text((xhour, yrow), text, fill=color, anchor="rm", font=font_header)
 
-    font_cur = ImageFont.truetype(path.BNAZANIN, 70)
-    
-    font_diff = ImageFont.truetype(path.BNAZANIN, 50)
-    font_value = ImageFont.truetype(path.BNAZANIN, 70)
     
     xcur = 890
     xdiff = 540
