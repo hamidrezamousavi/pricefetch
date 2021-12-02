@@ -41,7 +41,7 @@ def saveDataOnFile(indexes,filepath):
 def getDataOnFile(filepath):
     with open(filepath, 'r',encoding="utf8") as f_obj:
         indexs_list = json.load(f_obj)
-    print(indexs_list)
+  
     for index in indexs_list:
         for key in index:
             index[key] = decode_index(index[key])
