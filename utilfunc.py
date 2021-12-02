@@ -1,4 +1,6 @@
 import math
+from jdatetime import date
+from data import History
 
 def strDiff(str1, str2):
     try:
@@ -52,6 +54,25 @@ def rialToToman(number:str)->str:
     return number
 
 
-def getIndexHistory(index_code, indexs_list, duration):
-    pass
+def getIndexHistory(index_code, indexs_list, duration=180):
+    
+    #base_date = date.today() - timedelta(days=duration)
+    today = date.today()
+    history = History()
+    temp = date(1,1,1)
+    
+    for indexs in indexs_list[::-1]:
+        if (today - indexs[index_code].date).days <= duration:
+            history.max =  indexs[index_code].value if int(indexs[index_code].value) > int(history.max) else history.max
+            history.min =  indexs[index_code].value if int(indexs[index_code].value) < int(history.min) or history.min == '0' else history.min
+            #select one record for each days
+            if (temp - indexs[index_code].date).days != 0:
+                history.data=((indexs[index_code].value,indexs[index_code].date))   
+                temp = indexs[index_code].date
+                history.days += 1
+        else:
+            break    
+       
+    return history
+
 

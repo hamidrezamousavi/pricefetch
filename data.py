@@ -140,7 +140,73 @@ def initTotalIndexs():
     return total_indexs
  
 
+class History:
+    def __init__(self) -> None:
+        self._data =list()
+        self._max_value = 0
+        self._min_value = 0 
+        self._min_day_distance = 0
+        self._max_day_distance = 0
+        self._days= 0
 
+    @property
+    def data(self):
+        return self._data
+    @data.setter
+    def data(self,data):
+        self._data.append(data)
+    @data.getter
+    def data(self):
+        return self._data
+
+    @property
+    def max_value(self):
+        return self._max_value
+    @max_value.setter
+    def max_value(self,max_value):
+        self._max_value = max_value
+    @max_value.getter
+    def max_value(self):
+        return self._max_value
+
+    @property
+    def min_value(self):
+        return self._min_value
+    @min_value.setter
+    def min_value(self,min_value):
+        self._min_value = min_value
+    @min_value.getter
+    def min_value(self):
+        return self._min_value
+    
+    @property
+    def max_day_distance(self):
+        return self._max_day_distance
+    @max_day_distance.setter
+    def max_day_distance(self,max_day_distance):
+        self._max_day_distance = max_day_distance
+    @max_day_distance.getter
+    def max_day_distance(self):
+        return self._max_day_distance
+
+    @property
+    def min_day_distance(self):
+        return self._min_day_distance
+    @min_day_distance.setter
+    def min_day_distance(self,min_day_distance):
+        self._min_day_distance = min_day_distance
+    @min_day_distance.getter
+    def min_day_distance(self):
+        return self._min_day_distance
+    @property
+    def days(self):
+        return self._days
+    @days.setter
+    def days(self,days):
+        self._days = days
+    @days.getter
+    def days(self):
+        return self._days
 
 class DateTime:
     def __init__(self) -> None:
