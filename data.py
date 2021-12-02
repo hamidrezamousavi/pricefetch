@@ -143,10 +143,10 @@ def initTotalIndexs():
 class History:
     def __init__(self) -> None:
         self._data =list()
-        self._max_value = 0
-        self._min_value = 0 
-        self._min_day_distance = 0
-        self._max_day_distance = 0
+        self._max_value = -1
+        self._min_value = -1 
+        self._min_day_distance = -1
+        self._max_day_distance = -1
         self._days= 0
 
     @property
