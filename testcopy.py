@@ -79,7 +79,7 @@ def makeGraph(index_code, indexs_list, duration=180,graph_dim = (270,137)):
    
     print(currency_history.data)
     print(points)
-    
+
     graph = Image.new('RGBA',size=(graph_x,graph_y),color=(100,10,200,30))
     draw = ImageDraw.Draw(graph)
     for point in points:
@@ -92,4 +92,4 @@ def makeGraph(index_code, indexs_list, duration=180,graph_dim = (270,137)):
     draw.line(((0, upper_margin ),(270,upper_margin)))
     graph.show()
 
-makeGraph('dollar_rl',indexs_list,duration=180)
+makeGraph('sekee',indexs_list,duration=180)
