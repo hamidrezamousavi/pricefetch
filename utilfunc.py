@@ -21,6 +21,24 @@ def strDiff(str1, str2):
         resualt = f'{resualt:0.2f}'
     return str(resualt)
 
+def strPercentage(str1, str2):
+    try:
+        str1=str1.replace(',','')
+        str2=str2.replace(',','')
+        try:
+            str1 = int(str1)
+        except ValueError:
+            str1 = float(str1)
+        try:
+            str2 = int(str2)
+        except ValueError:
+            str2 = float(str2)
+        resualt = (str1/str2)*100
+    except:
+        return None
+    if isinstance(resualt,float):
+        resualt = f'%{resualt:0.1f}'
+    return str(resualt)
 
 def rialToToman(number:str)->str:
     periodpos = number.find('.')
@@ -54,25 +72,28 @@ def rialToToman(number:str)->str:
     return number
 
 
-def getIndexHistory(index_code, indexs_list, duration=180):
+def getIndexHistory(index_code, indexs_list, duration):
     
-    #base_date = date.today() - timedelta(days=duration)
     today = date.today()
     history = History()
     temp = date(1,1,1)
     
     for indexs in indexs_list[::-1]:
-        if (today - indexs[index_code].date).days <= duration:
-            history.max =  indexs[index_code].value if int(indexs[index_code].value) > int(history.max) else history.max
-            history.min =  indexs[index_code].value if int(indexs[index_code].value) < int(history.min) or history.min == '0' else history.min
-            #select one record for each days
+        distance = (today - indexs[index_code].date).days
+        if distance <= duration:
+            value = float(indexs[index_code].value.replace(',',''))
+            history.max_value =  value if value > history.max_value else history.max_value
+            history.min_value =  value if value < history.min_value or history.min_value == -1 else history.min_value
+            history.min_day_distance = distance if distance < history.min_day_distance or  history.min_day_distance == -1  else history.min_day_distance
+            history.max_day_distance = distance if distance > history.max_day_distance  else history.max_day_distance
+            
             if (temp - indexs[index_code].date).days != 0:
-                history.data=((indexs[index_code].value,indexs[index_code].date))   
+                history.data=((value,indexs[index_code].date))   
                 temp = indexs[index_code].date
                 history.days += 1
         else:
             break    
-       
+     
     return history
 
-
+print((strPercentage('152,123.1','254,215.2')))
