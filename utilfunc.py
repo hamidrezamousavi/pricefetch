@@ -71,7 +71,24 @@ def rialToToman(number:str)->str:
         number = '0' 
     return number
 
-
+def addThousandSeperator(str):
+    resualt = ''
+    decim = ''
+    if str.find('.')!= -1:
+        str,decim = str.split('.')
+    i = 0
+    for chr in reversed(str):
+        
+        if i%3 == 0 and  i>=3:
+            resualt = resualt+','+chr
+        else:
+            resualt = resualt + chr    
+        i += 1
+    resualt = resualt[::-1]
+    if decim:
+        resualt = resualt + '.'+decim
+    return resualt
+    
 def getIndexHistory(index_code, indexs_list, duration):
     
     today = date.today()
@@ -93,7 +110,7 @@ def getIndexHistory(index_code, indexs_list, duration):
                 history.days += 1
         else:
             break    
-     
+    
+
     return history
 
-print((strPercentage('152,123.1','254,215.2')))
