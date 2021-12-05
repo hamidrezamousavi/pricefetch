@@ -5,6 +5,7 @@ import requests
 from datetime import datetime
 from pytz import timezone
 from data import Index, code_to_name, DateTime
+from utilfunc import addThousandSeperator
 import path
 
 
@@ -157,7 +158,8 @@ def get_data():
     try:
         data = requests.get(path.bitcoin_url)
 
-        price = str(data.json()['bitcoin']['usd'])
+        price = addThousandSeperator(str(data.json()['bitcoin']['usd']))
+       
         name = 'بیت کوین'
         ind_code = 'btc'
         time = time_now
