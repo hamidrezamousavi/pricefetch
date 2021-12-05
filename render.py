@@ -2,11 +2,11 @@ from PIL import Image, ImageDraw, ImageFont
 import arabic_reshaper
 from bidi.algorithm import get_display
 import jdatetime
-
+from graph import makeChangeIcon, makeGraph
 from fileoperation import getDataOnFile
 import path
 from data import DateTime
-from utilfunc import rialToToman, strDiff
+from utilfunc import rialToToman, strDiff, strPercentage, addThousandSeperator
 
 def setColor(diff = None):
     RED = "#ff0000"
@@ -29,29 +29,41 @@ def prepare_text(text):
     bidi_text = get_display(reshaped_text)
     return bidi_text
 
-
 def renderPage1():
     
     indexs_list = getDataOnFile(path.indexarchive)
     last_indexs = indexs_list[-1]
     prv_indexs = indexs_list[-2]
     img = Image.open(path.page1_tepl)
+    img.convert('RGBA')
     d = ImageDraw.Draw(img)  
     
     font_header = ImageFont.truetype(path.BNAZANIN, 60)
-    font_cur = ImageFont.truetype(path.BNAZANIN, 70)
-    font_diff = ImageFont.truetype(path.BNAZANIN, 50)
-    font_value = ImageFont.truetype(path.Oswald, 70)
+    font_cur_l = ImageFont.truetype(path.BNAZANIN, 70)
+    font_cur_s = ImageFont.truetype(path.BNAZANIN, 50)
+    font_diff = ImageFont.truetype(path.Oswald, 40)
+    font_percent = ImageFont.truetype(path.Oswald, 50)
+    font_value_l = ImageFont.truetype(path.Oswald, 80)
+    font_value_s = ImageFont.truetype(path.Oswald, 60)
     
-    xweekday =1020
-    xday = 880
-    xmonth = 780
-    xyear = 680
-    xhurlable = 450
-    xhour = 300 
-    yrow = 140
+    color_header = '#FFC000'
+    color_currency = '#FFC000'
+    color_diff = "#ffffff"
+    color_percent = "#ffffff"
+    color_value = '#FFC000'
+    
+    
+    
+    #preper header
+    xweekday =970
+    xday = 800
+    xmonth = 700
+    xyear = 600
+    xhurlable = 400
+    xhour = 250 
+    yrow = 100
     date_time = DateTime()
-    color = "#ffffff"
+    color = color_header
     text = prepare_text(date_time.weekday)
     d.text((xweekday, yrow), text, fill=color, anchor="rm", font=font_header)
     text = prepare_text(date_time.day)
@@ -65,51 +77,57 @@ def renderPage1():
     text = prepare_text(date_time.hour+':'+date_time.minute)
     d.text((xhour, yrow), text, fill=color, anchor="rm", font=font_header)
 
-    
-    xcur = 890
-    xdiff = 540
-    xval = 210
-    yrow = 122
-    dyrow = 130
-    
+    #preper table
+    xcur = 1040
+    xdiff = 710
+    xpercent = 690
+    xval = 450
+    yrow = 75
+    dydiff = -20
+    dypercent = 30
+    dyrow = 145
+    xgraph = 10
+    ygraph = 12
+    xchange_icon = 580
+    ychange_icon = 25
+    graph_duration=180
+    graph_dim = (270,150)
+       
     currency = ['dollar_rl','eur','aed','try','geram18',
-                'sekee']
-
+                'sekee','btc','bourcind']
     for cur in currency:
-        color = setColor()
+        if cur in ['geram18','sekee','btc','bourcind']:
+            font_value = font_value_s
+        else:
+            font_value = font_value_l
         text = prepare_text(last_indexs[cur].name)
-        d.text((xcur, yrow:=yrow+dyrow), text, fill=color, anchor="rm", font=font_cur)
+        
+        if cur == 'bourcind':
+            font_cur = font_cur_s
+        else:
+            font_cur = font_cur_l
+        d.text((xcur, yrow:=yrow+dyrow), text, fill=color_currency, anchor="rm", font=font_cur)
         diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
-        diff = rialToToman(diff)
-        text = prepare_text(diff)
-        color = setColor(diff)
-        d.text((xdiff, yrow), text, fill=color, anchor="mm", font=font_diff)
-        text = prepare_text(rialToToman(last_indexs[cur].value))
-        d.text((xval, yrow), text, fill=color, anchor="mm", font=font_value)
-
-
-    xcur = 1050
-    xdiff = 520
-    xval = 200
-    yrow = 900
-    dyrow = 130
-    
-    currency = ['btc','bourcind']
-
-    for cur in currency:
-        color = setColor()
-        text = prepare_text(last_indexs[cur].name)
-        d.text((xcur, yrow:=yrow+dyrow), text, fill=color, anchor="rm", font=font_cur)
-        diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
-        text = prepare_text(diff)
-        color = setColor(diff)
-        d.text((xdiff, yrow), text, fill=color, anchor="mm", font=font_diff)
-        text = prepare_text(last_indexs[cur].value)
-        d.text((xval, yrow), text, fill=color, anchor="mm", font=font_value)
-                  
+        
+        change_icon = makeChangeIcon(diff)
+        img.paste(change_icon,(xchange_icon,ychange_icon:=ychange_icon+dyrow),change_icon)      
+         
+        text = prepare_text(rialToToman(diff))
+        d.text((xdiff, yrow+dydiff), text, fill=color_diff, anchor="mm", font=font_diff)
+        
+        precent = strPercentage(diff,last_indexs[cur].value)
+        text = prepare_text(precent)
+        d.text((xpercent, yrow+dypercent), text, fill=color_percent, anchor="mm", font=font_percent)
+        if cur != 'btc':
+            text = prepare_text(rialToToman(last_indexs[cur].value))
+        else:
+            text = prepare_text(last_indexs[cur].value)
+       
+        d.text((xval, yrow), text, fill=color_value, anchor="mm", font=font_value)
+        graph = makeGraph(cur, indexs_list, duration=graph_duration,graph_dim = graph_dim)
+        img.paste(graph,(xgraph,ygraph:=ygraph+dyrow),mask= graph)
     
     img.save(path.page1)
-    
 
 def renderPage2():
     
@@ -241,7 +259,7 @@ def renderPage2():
     text = prepare_text(rialToToman(last_indexs['rob'].value))
     d.text((210, 1235), text, fill=color, anchor="mm", font=font_va)
 
-
-    
-    
     img.save(path.page2)
+
+renderPage1()
+renderPage2()
