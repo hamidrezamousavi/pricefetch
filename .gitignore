@@ -1,13 +1,9 @@
 .vscode
 __pycache__
 venv
-BNAZANB_0.TTF
-BNAZANIN_0.TTF
 chromedriver.exe
-about.html
-file.txt
-page1.jpg
 indexarchive.json
-page1_tepl.jpg
 test.py
-images\background.jpg
+data1.csv
+images/
+font/
