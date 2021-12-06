@@ -76,9 +76,9 @@ def makeGraph(index_code, indexs_list, duration=180,graph_dim = (270,137)):
 def makeChangeIcon(diff = None):
     
     if diff == None:
-        change_icon = Image.open(path.red_change).convert('RGBA')
+        change_icon = Image.open(path.const_change).convert('RGBA')
     elif (diff == '0') or (diff == '0.00'):
-        change_icon = Image.open(path.green_change).convert('RGBA')
+        change_icon = Image.open(path.const_change).convert('RGBA')
     elif diff.find('-')==0:
         change_icon = Image.open(path.red_change).convert('RGBA')
     else:
