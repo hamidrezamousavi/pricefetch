@@ -261,5 +261,3 @@ def renderPage2():
 
     img.save(path.page2)
 
-renderPage1()
-renderPage2()
