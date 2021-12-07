@@ -18,10 +18,7 @@ def strDiff(str1, str2):
     except:
         return None
     if isinstance(resualt,float):
-        if resualt < 0.1 and resualt > -0.1:
-            resualt = '0'
-        else:
-            resualt = f'{resualt:0.1f}'
+        resualt = f'{resualt:0.2f}'
     return str(resualt)
 
 def strPercentage(str1, str2):
@@ -44,10 +41,19 @@ def strPercentage(str1, str2):
     return str(resualt)
 
 def rialToToman(number:str)->str:
+    sing = True
+    if number.find('-') == 0:
+        sing = False
+        number = number.replace('-','')
+        
+    if number.find('.')==0:
+        number = '0'+number
     periodpos = number.find('.')
     periodpos = len(number) if periodpos == -1 else periodpos
     number = number.replace('.','')
+    
     number = number[:periodpos-1]+'.'+number[periodpos-1:]
+  
     number = number.replace(',','')
     periodpos = number.find('.')
     cunter = -1
@@ -62,14 +68,20 @@ def rialToToman(number:str)->str:
             num = num+chr + ','
         else:
             num = num + chr
-       
+      
     number = num[::-1]
+   
     if number.find(',') == 0:
+        number = number[1:]
+    
+    if number.find(',') == 0 :
         number = number[1:]
    
     periodpos = number.find('.') 
-    if number[periodpos+1] == '0':
-        number = number[:periodpos] 
+    #if number[periodpos+1] == '0':
+    #    number = number[:periodpos] 
+    if sing == False:
+        number = '-' + number
     if number ==  '':
         number = '0' 
     return number
