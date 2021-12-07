@@ -18,7 +18,10 @@ def strDiff(str1, str2):
     except:
         return None
     if isinstance(resualt,float):
-        resualt = f'{resualt:0.2f}'
+        if resualt < 0.1 and resualt > -0.1:
+            resualt = '0'
+        else:
+            resualt = f'{resualt:0.1f}'
     return str(resualt)
 
 def strPercentage(str1, str2):
