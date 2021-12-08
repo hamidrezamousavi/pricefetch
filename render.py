@@ -131,6 +131,8 @@ def renderPage1():
 
 def renderPage2():
     
+    
+   
     indexs_list = getDataOnFile(path.indexarchive)
     last_indexs = indexs_list[-1]
     prv_indexs = indexs_list[-2]
@@ -143,6 +145,8 @@ def renderPage2():
     img = Image.open(path.page2_tepl)
     d = ImageDraw.Draw(img)  
     
+    color_currency = '#FFC000'
+    color_value = '#FFC000'
     font_cr = ImageFont.truetype(path.BNAZANIN, 65)
     font_cr_s = ImageFont.truetype(path.BNAZANIN, 35)
     font_cn = ImageFont.truetype(path.BNAZANIN, 40)
@@ -160,21 +164,19 @@ def renderPage2():
     currency_col1 = ['cad','aud','nzd','gbp','cny','inr','afn','thb',]
     
     for cur in currency_col1:
-        color = setColor()
         text = prepare_text(last_indexs[cur].name.split(' ')[0])
-        d.text((xcr, ycr:=ycr+dy), text, fill=color, anchor="rm", font=font_cr)
+        d.text((xcr, ycr:=ycr+dy), text, fill=color_currency, anchor="rm", font=font_cr)
         try:
             text = prepare_text(last_indexs[cur].name.split(' ')[1])
-            d.text((xcu, ycu:=ycu+dy), text, fill=color, anchor="rm", font=font_cn)
+            d.text((xcu, ycu:=ycu+dy), text, fill=color_currency, anchor="rm", font=font_cn)
         except:
             text = prepare_text(last_indexs[cur].name.split(' ')[0])
-            d.text((xcu, ycu:=ycu+dy), text, fill=color, anchor="rm", font=font_cn)
+            d.text((xcu, ycu:=ycu+dy), text, fill=color_currency, anchor="rm", font=font_cn)
         diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
-        color = setColor(diff)
         arrow = chooseArrow(diff)
         img.paste(arrow,(xarrow,yarrow:=yarrow+dy),arrow)
         text = prepare_text(rialToToman(last_indexs[cur].value))
-        d.text((xva, yva:=yva+dy), text, fill=color, anchor="lm", font=font_va)
+        d.text((xva, yva:=yva+dy), text, fill=color_value, anchor="lm", font=font_va)
     
     #******************************
     xcr = 420
@@ -194,89 +196,76 @@ def renderPage2():
             name = last_indexs[cur].name.split(' ')[0]
             text_yen = prepare_text(name[:2])
             text_100 = prepare_text(name[2:])
-            d.text((xcr, ycr:=ycr+dy), text_yen, fill=color, anchor="rm", font=font_cr)
-            d.text((xcr-55, ycr-5), text_100, fill=color, anchor="rm", font=font_cr_s)
+            d.text((xcr, ycr:=ycr+dy), text_yen, fill=color_currency, anchor="rm", font=font_cr)
+            d.text((xcr-55, ycr-5), text_100, fill=color_currency, anchor="rm", font=font_cr_s)
         
         else:
             text = prepare_text(last_indexs[cur].name.split(' ')[0])
-            d.text((xcr, ycr:=ycr+dy), text, fill=color, anchor="rm", font=font_cr)
+            d.text((xcr, ycr:=ycr+dy), text, fill=color_currency, anchor="rm", font=font_cr)
         try:
             text = prepare_text(last_indexs[cur].name.split(' ')[1])
-            
-            d.text((xcu, ycu:=ycu+dy), text, fill=color, anchor="rm", font=font_cn)
+            d.text((xcu, ycu:=ycu+dy), text, fill=color_currency, anchor="rm", font=font_cn)
         except:
             text = prepare_text(last_indexs[cur].name.split(' ')[0])
-            d.text((xcu, ycu:=ycu+dy), text, fill=color, anchor="rm", font=font_cn)
+            d.text((xcu, ycu:=ycu+dy), text, fill=color_currency, anchor="rm", font=font_cn)
         diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
-        color = setColor(diff)
         arrow = chooseArrow(diff)
-        img.paste(arrow,(xarrow,yarrow:=yarrow+dy),arrow)
-        
+        img.paste(arrow,(xarrow,yarrow:=yarrow+dy),arrow)       
         text = prepare_text(rialToToman(last_indexs[cur].value))
-        d.text((xva, yva:=yva+dy), text, fill=color, anchor="lm", font=font_va)
+        d.text((xva, yva:=yva+dy), text, fill=color_value, anchor="lm", font=font_va)
     
     #**********once jahany*********
-    color = setColor()
+    
     text = prepare_text(last_indexs['goldoz'].name.split(' ')[0])
-    d.text((1020, 1100), text, fill=color, anchor="rm", font=font_cr)
+    d.text((1020, 1100), text, fill=color_currency, anchor="rm", font=font_cr)
        
     try:
         text = prepare_text(last_indexs['goldoz'].name.split(' ')[1])
-        d.text((1020, 1150), text, fill=color, anchor="rm", font=font_cn)
+        d.text((1020, 1150), text, fill=color_currency, anchor="rm", font=font_cn)
     except:
         pass
-    diff = strDiff(last_indexs['goldoz'].value, prv_indexs['goldoz'].value)
-    color = setColor(diff)
-    
-    
-        
+    diff = strDiff(last_indexs['goldoz'].value, prv_indexs['goldoz'].value) 
     arrow = chooseArrow(diff)
     img.paste(arrow,(800,1100),arrow)
     text = prepare_text(last_indexs['goldoz'].value)
-    d.text((550, 1125), text, fill=color, anchor="lm", font=font_va)
+    d.text((550, 1125), text, fill=color_value, anchor="lm", font=font_va)
     
-    
-
+   
     #**************seke ghadim*****
-    color = setColor()
+   
     text = prepare_text(last_indexs['sekeb'].name.split(' ')[0])
-    d.text((520, 1100), text, fill=color, anchor="rm", font=font_cr)
-       
+    d.text((520, 1100), text, fill=color_currency, anchor="rm", font=font_cr)  
     try:
         text = prepare_text(last_indexs['sekeb'].name.split(' ')[1])
-        d.text((520, 1150), text, fill=color, anchor="rm", font=font_cn)
+        d.text((520, 1150), text, fill=color_currency, anchor="rm", font=font_cn)
     except:
         pass
     diff = strDiff(last_indexs['sekeb'].value, prv_indexs['sekeb'].value)
-    color = setColor(diff)
     arrow = chooseArrow(diff)
     img.paste(arrow,(300,1100),arrow)
     text = prepare_text(rialToToman(last_indexs['sekeb'].value))
-    d.text((30, 1125), text, fill=color, anchor="lm", font=font_va_s)
+    d.text((30, 1125), text, fill=color_value, anchor="lm", font=font_va_s)
     
     
     #**************seke nim*****
-    color = setColor()
+    
     text = prepare_text(last_indexs['nim'].name)
-    d.text((1020, 1235), text, fill=color, anchor="rm", font=font_cr)
+    d.text((1020, 1235), text, fill=color_currency, anchor="rm", font=font_cr)
     diff = strDiff(last_indexs['nim'].value, prv_indexs['nim'].value)
-    color = setColor(diff)
     arrow = chooseArrow(diff)
     img.paste(arrow,(800,1200),arrow)
     text = prepare_text(rialToToman(last_indexs['nim'].value))
-    d.text((550, 1235), text, fill=color, anchor="lm", font=font_va_s)
+    d.text((550, 1235), text, fill=color_value, anchor="lm", font=font_va_s)
     
 
     #**************seke rob*****
-    color = setColor()
+    
     text = prepare_text(last_indexs['rob'].name)
-    d.text((520, 1235), text, fill=color, anchor="rm", font=font_cr)
+    d.text((520, 1235), text, fill=color_currency, anchor="rm", font=font_cr)
     diff = strDiff(last_indexs['rob'].value, prv_indexs['rob'].value)
-    color = setColor(diff)
     arrow = chooseArrow(diff)
     img.paste(arrow,(300,1200),arrow)
     text = prepare_text(rialToToman(last_indexs['rob'].value))
-    d.text((30, 1235), text, fill=color, anchor="lm", font=font_va_s)
-
+    d.text((30, 1235), text, fill=color_value, anchor="lm", font=font_va_s)
     img.save(path.page2)
 
