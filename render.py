@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 import arabic_reshaper
 from bidi.algorithm import get_display
 import jdatetime
-from graph import makeChangeIcon, makeGraph
+from graph import makeChangeIcon, makeGraph, chooseArrow
 from fileoperation import getDataOnFile
 import path
 from data import DateTime
@@ -146,15 +146,17 @@ def renderPage2():
     font_cr = ImageFont.truetype(path.BNAZANIN, 65)
     font_cr_s = ImageFont.truetype(path.BNAZANIN, 35)
     font_cn = ImageFont.truetype(path.BNAZANIN, 40)
-    font_va = ImageFont.truetype(path.BNAZANIN, 75)
+    font_va = ImageFont.truetype(path.Oswald, 60)
+    font_va_s = ImageFont.truetype(path.Oswald, 50)
     xcr = 920
     ycr = -30
     xcu = xcr    
     ycu = ycr + 50
-    xva = 700
-    yva = 0
+    xva = 550
+    yva = -20
     dy = 125
-    
+    xarrow = 750
+    yarrow= -40
     currency_col1 = ['cad','aud','nzd','gbp','cny','inr','afn','thb',]
     
     for cur in currency_col1:
@@ -169,18 +171,21 @@ def renderPage2():
             d.text((xcu, ycu:=ycu+dy), text, fill=color, anchor="rm", font=font_cn)
         diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
         color = setColor(diff)
+        arrow = chooseArrow(diff)
+        img.paste(arrow,(xarrow,yarrow:=yarrow+dy),arrow)
         text = prepare_text(rialToToman(last_indexs[cur].value))
-        d.text((xva, yva:=yva+dy), text, fill=color, anchor="mm", font=font_va)
+        d.text((xva, yva:=yva+dy), text, fill=color, anchor="lm", font=font_va)
     
     #******************************
     xcr = 420
     ycr = -30
     xcu = xcr    
     ycu = ycr + 50
-    xva = 180
-    yva = 0
+    xva = 30
+    yva = -20
     dy = 125
-    
+    xarrow = 250
+    yarrow= -40
    
     currency_col2 = ['rub','jpy','sek','azn','kwd','iqd','sar','myr']
     for cur in currency_col2:
@@ -204,8 +209,11 @@ def renderPage2():
             d.text((xcu, ycu:=ycu+dy), text, fill=color, anchor="rm", font=font_cn)
         diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
         color = setColor(diff)
+        arrow = chooseArrow(diff)
+        img.paste(arrow,(xarrow,yarrow:=yarrow+dy),arrow)
+        
         text = prepare_text(rialToToman(last_indexs[cur].value))
-        d.text((xva, yva:=yva+dy), text, fill=color, anchor="mm", font=font_va)
+        d.text((xva, yva:=yva+dy), text, fill=color, anchor="lm", font=font_va)
     
     #**********once jahany*********
     color = setColor()
@@ -219,8 +227,13 @@ def renderPage2():
         pass
     diff = strDiff(last_indexs['goldoz'].value, prv_indexs['goldoz'].value)
     color = setColor(diff)
+    
+    
+        
+    arrow = chooseArrow(diff)
+    img.paste(arrow,(800,1100),arrow)
     text = prepare_text(last_indexs['goldoz'].value)
-    d.text((700, 1125), text, fill=color, anchor="mm", font=font_va)
+    d.text((550, 1125), text, fill=color, anchor="lm", font=font_va)
     
     
 
@@ -236,8 +249,10 @@ def renderPage2():
         pass
     diff = strDiff(last_indexs['sekeb'].value, prv_indexs['sekeb'].value)
     color = setColor(diff)
+    arrow = chooseArrow(diff)
+    img.paste(arrow,(300,1100),arrow)
     text = prepare_text(rialToToman(last_indexs['sekeb'].value))
-    d.text((210, 1125), text, fill=color, anchor="mm", font=font_va)
+    d.text((30, 1125), text, fill=color, anchor="lm", font=font_va_s)
     
     
     #**************seke nim*****
@@ -246,8 +261,10 @@ def renderPage2():
     d.text((1020, 1235), text, fill=color, anchor="rm", font=font_cr)
     diff = strDiff(last_indexs['nim'].value, prv_indexs['nim'].value)
     color = setColor(diff)
+    arrow = chooseArrow(diff)
+    img.paste(arrow,(800,1200),arrow)
     text = prepare_text(rialToToman(last_indexs['nim'].value))
-    d.text((700, 1235), text, fill=color, anchor="mm", font=font_va)
+    d.text((550, 1235), text, fill=color, anchor="lm", font=font_va_s)
     
 
     #**************seke rob*****
@@ -256,8 +273,10 @@ def renderPage2():
     d.text((520, 1235), text, fill=color, anchor="rm", font=font_cr)
     diff = strDiff(last_indexs['rob'].value, prv_indexs['rob'].value)
     color = setColor(diff)
+    arrow = chooseArrow(diff)
+    img.paste(arrow,(300,1200),arrow)
     text = prepare_text(rialToToman(last_indexs['rob'].value))
-    d.text((210, 1235), text, fill=color, anchor="mm", font=font_va)
+    d.text((30, 1235), text, fill=color, anchor="lm", font=font_va_s)
 
     img.save(path.page2)
 

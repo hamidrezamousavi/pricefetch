@@ -85,6 +85,17 @@ def makeChangeIcon(diff = None):
         change_icon = Image.open(path.green_change).convert('RGBA')
     return change_icon
 
+def chooseArrow(diff = None):
+    
+    if diff == None:
+        arrow = Image.open(path.white_circle).convert('RGBA')
+    elif (diff == '0') or (diff == '0.00'):
+        arrow = Image.open(path.white_circle).convert('RGBA')
+    elif diff.find('-')==0:
+        arrow = Image.open(path.red_arrow).convert('RGBA')
+    else:
+        arrow = Image.open(path.green_arrow).convert('RGBA')
+    return arrow
 
 
 

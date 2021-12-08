@@ -9,6 +9,10 @@ page2_tepl = 'images\page2_tepl.jpg'
 red_change = 'images\\red.png'
 green_change = 'images\green.png'
 const_change = 'images\const.png'
+red_arrow = 'images\\redArrow.png'
+green_arrow = 'images\greenAroow.png'
+white_circle = 'images\circle.png'
+
 BNAZANIN = 'font\BNazanin_0.ttf'
 Oswald = "font\oswald\static\Oswald-Regular.ttf"
 currency_url = 'https://www.tgju.org/currency'
