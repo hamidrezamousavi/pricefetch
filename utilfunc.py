@@ -77,13 +77,16 @@ def rialToToman(number:str)->str:
     if number.find(',') == 0 :
         number = number[1:]
    
-    periodpos = number.find('.') 
-    #if number[periodpos+1] == '0':
-    #    number = number[:periodpos] 
-    if sing == False:
-        number = '-' + number
+    
+    if number.find('.') != -1:
+        number = number[0:number.find('.')]
+  
+
     if number ==  '':
         number = '0' 
+    elif sing == False:
+        number = '-' + number
+    
     return number
 
 def addThousandSeperator(str):
@@ -128,4 +131,5 @@ def getIndexHistory(index_code, indexs_list, duration):
     
 
     return history
+
 
