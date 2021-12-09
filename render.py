@@ -189,7 +189,7 @@ def renderPage2():
     xva = 30
     yva = -20
     dy = 125
-    xarrow = 250
+    xarrow = 225
     yarrow= -40
    
     currency_col2 = ['rub','jpy','sek','azn','kwd','iqd','sar','myr']
@@ -252,23 +252,38 @@ def renderPage2():
     
     #**************seke nim*****
     
-    text = prepare_text(last_indexs['nim'].name)
-    d.text((1020, 1235), text, fill=color_currency, anchor="rm", font=font_cr)
+    text = prepare_text(last_indexs['nim'].name.split(' ')[0])
+    d.text((1020, 1235), text, fill=color_currency, anchor="rm", font=font_cr)  
+    try:
+        text = prepare_text(last_indexs['nim'].name.split(' ')[1])
+        d.text((1020, 1285), text, fill=color_currency, anchor="rm", font=font_cn)
+    except:
+        pass
+
+    #text = prepare_text(last_indexs['nim'].name)
+    #d.text((1020, 1235), text, fill=color_currency, anchor="rm", font=font_cr)
     diff = strDiff(last_indexs['nim'].value, prv_indexs['nim'].value)
     arrow = chooseArrow(diff)
-    img.paste(arrow,(800,1200),arrow)
+    img.paste(arrow,(800,1225),arrow)
     text = prepare_text(rialToToman(last_indexs['nim'].value))
-    d.text((550, 1235), text, fill=color_value, anchor="lm", font=font_va_s)
+    d.text((550, 1260), text, fill=color_value, anchor="lm", font=font_va_s)
     
 
     #**************seke rob*****
     
-    text = prepare_text(last_indexs['rob'].name)
-    d.text((520, 1235), text, fill=color_currency, anchor="rm", font=font_cr)
+    text = prepare_text(last_indexs['rob'].name.split(' ')[0])
+    d.text((520, 1235), text, fill=color_currency, anchor="rm", font=font_cr)  
+    try:
+        text = prepare_text(last_indexs['rob'].name.split(' ')[1])
+        d.text((520, 1285), text, fill=color_currency, anchor="rm", font=font_cn)
+    except:
+        pass
+    #text = prepare_text(last_indexs['rob'].name)
+    #d.text((520, 1235), text, fill=color_currency, anchor="rm", font=font_cr)
     diff = strDiff(last_indexs['rob'].value, prv_indexs['rob'].value)
     arrow = chooseArrow(diff)
-    img.paste(arrow,(300,1200),arrow)
+    img.paste(arrow,(300,1225),arrow)
     text = prepare_text(rialToToman(last_indexs['rob'].value))
-    d.text((30, 1235), text, fill=color_value, anchor="lm", font=font_va_s)
+    d.text((30, 1260), text, fill=color_value, anchor="lm", font=font_va_s)
     img.save(path.page2)
 
