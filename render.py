@@ -6,7 +6,7 @@ from graph import makeChangeIcon, makeGraph, chooseArrow
 from fileoperation import getDataOnFile
 import path
 from data import DateTime
-from utilfunc import rialToToman, strDiff, strPercentage, addThousandSeperator
+from utilfunc import rialToToman, strDiff, strPercentage, truncDecimal
 
 def setColor(diff = None):
     RED = "#ff0000"
@@ -110,22 +110,25 @@ def renderPage1():
         d.text((xcur, yrow:=yrow+dyrow), text, fill=color_currency, anchor="rm", font=font_cur)
         diff = strDiff(last_indexs[cur].value, prv_indexs[cur].value)
         
-        change_icon = makeChangeIcon(diff)
+        change_icon = makeChangeIcon(truncDecimal(diff))
         img.paste(change_icon,(xchange_icon,ychange_icon:=ychange_icon+dyrow),change_icon)      
-         
-        text = prepare_text(rialToToman(diff))
+        if cur != 'btc' and cur!= 'bourcind':
+            text = prepare_text(rialToToman(diff))
+        else:
+            text = prepare_text(truncDecimal(diff))
         d.text((xdiff, yrow+dydiff), text, fill=color_diff, anchor="mm", font=font_diff)
         
         precent = strPercentage(diff,last_indexs[cur].value)
         text = prepare_text(precent)
         d.text((xpercent, yrow+dypercent), text, fill=color_percent, anchor="mm", font=font_percent)
-        if cur != 'btc':
+        if cur != 'btc' and cur!= 'bourcind':
             text = prepare_text(rialToToman(last_indexs[cur].value))
-        else:
+        elif cur == 'btc':
             #add dollar sing to btc value
             text = last_indexs[cur].value + u" \u0024" 
             text = prepare_text(text)
-       
+        elif cur == 'bourcind':
+            text = prepare_text(truncDecimal(last_indexs[cur].value))
         d.text((xval, yrow), text, fill=color_value, anchor="mm", font=font_value)
         graph = makeGraph(cur, indexs_list, duration=graph_duration,graph_dim = graph_dim)
         img.paste(graph,(xgraph,ygraph:=ygraph+dyrow),mask= graph)

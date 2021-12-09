@@ -107,6 +107,14 @@ def addThousandSeperator(str):
         resualt = resualt + '.'+decim
     return resualt
     
+def truncDecimal(srtNumber):
+    if srtNumber.find('.')!= -1:
+        srtNumber = srtNumber[:srtNumber.find('.')]
+    if srtNumber == '-' or srtNumber == '-0':
+        srtNumber = '0'
+    return srtNumber 
+
+
 def getIndexHistory(index_code, indexs_list, duration):
     
     today = date.today()
@@ -131,5 +139,4 @@ def getIndexHistory(index_code, indexs_list, duration):
     
 
     return history
-
 
