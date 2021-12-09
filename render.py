@@ -56,7 +56,7 @@ def renderPage1():
     
     #preper header
     xweekday =970
-    xday = 800
+    xday = 770
     xmonth = 700
     xyear = 600
     xhurlable = 400
@@ -95,6 +95,7 @@ def renderPage1():
        
     currency = ['dollar_rl','eur','aed','try','geram18',
                 'sekee','btc','bourcind']
+    
     for cur in currency:
         if cur in ['geram18','sekee','btc','bourcind']:
             font_value = font_value_s
@@ -121,7 +122,9 @@ def renderPage1():
         if cur != 'btc':
             text = prepare_text(rialToToman(last_indexs[cur].value))
         else:
-            text = prepare_text(last_indexs[cur].value)
+            #add dollar sing to btc value
+            text = last_indexs[cur].value + u" \u0024" 
+            text = prepare_text(text)
        
         d.text((xval, yrow), text, fill=color_value, anchor="mm", font=font_value)
         graph = makeGraph(cur, indexs_list, duration=graph_duration,graph_dim = graph_dim)
@@ -227,7 +230,7 @@ def renderPage2():
     diff = strDiff(last_indexs['goldoz'].value, prv_indexs['goldoz'].value) 
     arrow = chooseArrow(diff)
     img.paste(arrow,(800,1100),arrow)
-    text = prepare_text(last_indexs['goldoz'].value)
+    text = prepare_text(last_indexs['goldoz'].value+ u" \u0024")
     d.text((550, 1125), text, fill=color_value, anchor="lm", font=font_va)
     
    
