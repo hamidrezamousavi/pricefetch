@@ -99,7 +99,3 @@ def chooseArrow(diff = None):
 
 
 
-if __name__ == '__main__':
-    indexs_list = getDataOnFile(path.indexarchive)
-    graph = makeGraph('dollar_rl',indexs_list,duration=180)
-    graph.show()
