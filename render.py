@@ -55,12 +55,12 @@ def renderPage1():
     
     
     #preper header
-    xweekday =970
-    xday = 770
-    xmonth = 700
-    xyear = 600
-    xhurlable = 400
-    xhour = 250 
+    xweekday =1000
+    xday = 815
+    xmonth = 745
+    xyear = 570
+    xhurlable = 370
+    xhour = 220 
     yrow = 100
     date_time = DateTime()
     color = color_header
