@@ -135,7 +135,7 @@ def code_to_name(code):
 def initTotalIndexs():
     total_indexs = dict()
     for id, name  in request_indx.items():
-        total_indexs[id] = Index(name,'0','0','0')
+        total_indexs[id] = Index(name,'0',jdatetime.time(13,0,0),jdatetime.date(1401,1,1))
     
     return total_indexs
  
