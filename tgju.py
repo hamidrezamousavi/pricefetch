@@ -7,7 +7,7 @@ from pytz import timezone
 from data import Index, code_to_name, DateTime
 from utilfunc import addThousandSeperator
 import path
-
+#a
 
 def get_data():
     '''
@@ -28,10 +28,11 @@ def get_data():
     
     #establish a chrome browser for real time scrap
     yield indexes, 'Gathering process is start'
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
-    browser = webdriver.Chrome(options=chrome_options)
+    
+    #chrome_options = webdriver.ChromeOptions()
+    #chrome_options.add_argument("--headless")
+    #chrome_options.add_argument("--disable-gpu")
+    #browser = webdriver.Chrome(options=chrome_options)
     #get system date
     date_time_now = DateTime()
     time_now= f'{date_time_now.hour}:{date_time_now.minute}:{date_time_now.second}'
@@ -39,10 +40,11 @@ def get_data():
     #get currency data
     try:
        
-        browser.get(path.currency_url)
-        sleep(AWAIT_TIME)
+       # browser.get(path.currency_url)
+        #sleep(AWAIT_TIME)
 
-        page = browser.page_source
+      #  page = browser.page_source
+        page = requests.get(path.currency_url).text
         page_bs = BeautifulSoup(page,'html.parser')
 
         price_table = page_bs.find_all('table',{'data-tab-id':"1"})
@@ -65,10 +67,11 @@ def get_data():
     
     #get coin data
     try:
-        browser.get(path.coin_url)
-        sleep(AWAIT_TIME)
-        page = browser.page_source
+      #  browser.get(path.coin_url)
+       # sleep(AWAIT_TIME)
+        #page = browser.page_source
 
+        page = requests.get(path.coin_url).text
         page_bs = BeautifulSoup(page,'html.parser')
         price_table = page_bs.find('table',{'class':"data-table market-table market-section-right"})
 
@@ -90,10 +93,10 @@ def get_data():
     
     #get gold data
     try:
-        browser.get(path.gold_url)
-        sleep(AWAIT_TIME)
-        page = browser.page_source
-
+       # browser.get(path.gold_url)
+       # sleep(AWAIT_TIME)
+       # page = browser.page_source
+        page = requests.get(path.gold_url).text
         page_bs = BeautifulSoup(page,'html.parser')
         price_table = page_bs.find('table',{'data-tab-id':'1'})
 
@@ -115,10 +118,11 @@ def get_data():
     
     #get bource index price
     try:
-        browser.get(path.bource_url)
-        sleep(AWAIT_TIME)
+       # browser.get(path.bource_url)
+       # sleep(AWAIT_TIME)
 
-        page = browser.page_source
+       # page = browser.page_source
+        page = requests.get(path.bource_url).text
         page_bs = BeautifulSoup(page,'html.parser')
         value = page_bs.find('li',{'id':'l-bourse'}).span.text
         time = page_bs.find('em',{ 'id':'dynamic-clock'}).text
@@ -131,7 +135,7 @@ def get_data():
     except Exception as e:
         yield indexes, 'In bource : '+str(e)
     
-    browser.quit()
+  #  browser.quit()
     
     #get gold world price
     try:
