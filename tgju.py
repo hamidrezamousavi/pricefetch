@@ -124,7 +124,7 @@ def get_data():
        # page = browser.page_source
         page = requests.get(path.bource_url).text
         page_bs = BeautifulSoup(page,'html.parser')
-        value = page_bs.find('li',{'id':'l-bourse'}).span.text
+        value = page_bs.find('li',{'id':'l-gc30'}).span.text
         time = page_bs.find('em',{ 'id':'dynamic-clock'}).text
         
         ind_code = 'bourcind'
